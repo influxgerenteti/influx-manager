@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+              body {
+                background: rgb(204, 204, 204);
+                font-size: 0.6em;
+              }
+              h2{
+                font-size: 0.9em;
+              }
+              page {
+                background: white;
+                display: block;
+                margin: 0 auto;
+                padding: 2em;
+                margin-bottom: 0.5cm;
+
+              }
+              page[size="A4"] {
+                width: 21cm;
+                
+              }
+              page[size="A4"][layout="portrait"] {
+                width: 29.7cm;
+                
+              }
+              @media print {
+                .pagebreak { page-break-before: always; }
+
+                body,
+                page {
+                  margin: 0;
+                  box-shadow: 0;
+                }
+                page[size="A4"] {
+                    width: 21cm;
+                    height: 29.7cm;
+                  }
+                  page[size="A4"][layout="portrait"] {
+                    width: 29.7cm;
+                    height: 21cm;
+                  }
+              }
+              .header {
+                
+                text-align: center;
+                
+              }
+             
+        </style>
+
+        <style>
+            .imagem-logo {
+        		
+                width: 2.7cm;
+              height: 2.4cm;
+        	}
+        	
+        	.titulo-empresa {
+        		position: absolute; 
+        		padding-top: 8px;
+                padding-left: 16px;
+        	}
+        	
+        	.numero-recibo {
+        		position: absolute; 
+        		padding-top: 8px; 
+        		padding-left: 11cm;
+        		text-align: right;
+        		width: 153px;
+        	}
+        	
+        	.data-impressao {
+        		position: absolute; 
+        		padding-top: 32px; 
+        		padding-left: 14cm;        		
+        	}
+        	
+        	.endereco-empresa {
+        		position: absolute; 
+        		padding-top: 32px; 
+                padding-left: 16px;
+        		word-wrap: break-word; 
+        		width: 15cm;
+        	}
+        	
+        	.data-impressao-completo {
+        		
+        		text-align: right;
+                padding-top: 32px; 
+                
+        		padding-left: 11cm; 
+        	}
+        	
+        	.texto-tabela-esquerda {
+        		text-align: left;
+        	}        	
+        	
+        	.texto-recebi-empresa {
+        		padding-left: 100px;
+        	}
+        	
+        	.texto-recebi-importancia {
+        		padding-left: 32px;
+        	}
+        	
+        	.texto-referente-a {
+        		padding-left: 11cm;
+        	}
+        	
+        	.texto-tabela-esquerda.quebra-linha-tabela {
+        		width: 21cm;
+        		word-wrap: break-word;
+        	}
+        	
+        	.in-recibo {
+        		padding: 32px 0;
+        	}
+        	.in-recibo:nth-child(n+2) {
+                border-top: 2px dashed #000;
+            }
+            
+            .recibo-assinatura {
+            	display: flex;
+            }
+            .recibo-assinatura b {
+            	margin-right: 32px
+            }
+            .recibo-assinatura label:last-child {
+            	display: block;
+            }
+            .header-recibo{
+                display:flex;
+                width:100%;
+                height:110px;
+            }
+
+        </style>
+    </head>
+<body>
+    <page size="A4">
+        [RECIBO]
+    </page>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,67 @@
+export default {
+  lista: [],
+  estaCarregando: false,
+  bFuncionarioDisponivel: true,
+  order: '',
+  direcao: '',
+  paginaAtual: 1,
+  totalItens: null,
+  todosItensCarregados: false,
+  itemSelecionadoID: null,
+  itemSelecionado: {
+    id: null,
+    pessoa: null,
+    cargo: null,
+    nivel_instrutor: null,
+    valor_hora_linhas: [],
+    funcionarioValorHoras: [],
+    banco: null,
+    gestor_comercial_funcionario: null,
+    tipo_pagamento: 'H',
+    apelido: null,
+    data_admissao: '',
+    data_demissao: '',
+    agencia: null,
+    digito_agencia: null,
+    conta_corrente: null,
+    digito_conta_corrente: null,
+    recebe_emails: null,
+    instrutor: false,
+    instrutor_personal: false,
+    gestor_comercial: false,
+    consultor: false,
+    atendente: false,
+    coordenador_pedagogico: false,
+    situacao: null,
+    usuario: null,
+    disponibilidades: [
+      {
+        id: null,
+        dia_semana: null,
+        hora_inicial: '',
+        hora_final: '',
+        situacao: null
+      }
+    ]
+  },
+
+  filtros: {
+    funcionario: null,
+    apelido: null,
+    cnpj_cpf: null,
+    data_admissao: '',
+    data_demissao: '',
+    cargo: null,
+    tipo_pagamento: [],
+    nivel_instrutor: null,
+    consultor: null,
+    coordenador_pedagogico: null,
+    gestor_comercial: null,
+    atendente: null,
+    instrutor: null,
+    instrutor_personal: null,
+    email_usuario: null,
+    apenas_funcionarios_ativos: null,
+    franqueada_personalizada: null
+  }
+}

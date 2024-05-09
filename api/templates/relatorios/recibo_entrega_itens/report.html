@@ -1,0 +1,31 @@
+    {% block asdasd %} {{ dump(recibos) }} {% endblock %}
+
+    {% extends "relatorios/recibo_entrega_itens/base.html" %}
+
+    {% block nomeFranqueada %}{{ recibo.nomeEmpresa }}{% endblock %}
+    {% block nomeFranqueadaData %}{{ recibo.nomeEmpresa }} em {{ recibo.dataEntrega }}{% endblock %}
+                {% block reciboNumero %}{{ recibo.numeroRecibo }}{% endblock %}
+                {% block dataImpressao %}{{ recibo.dataImpressao }}{% endblock %}
+                {% block dataEntrega %}{{ recibo.dataEntrega }}{% endblock %}
+                {% block dataEmissao %}{{ recibo.dataEmissao }}{% endblock %}
+                {% block dataImpressaoCompleto %}{{ recibo.dataImpressaoCompleto }}{% endblock %}
+                {% block enderecoCompletoEmpresa %}{{ recibo.enderecoCompletoEmpresa }}{% endblock %}
+                {% block valorTotal %}{{ recibo.ValorTotalItem|number_format(2, ',', '.') }}{% endblock %}
+                {% block qtdItens %}{{ recibo.Qtidade|number_format(0, ',', '.') }}{% endblock %}
+                {% block valorExtenso %}{{ recibo.valorExtenso }}{% endblock %}
+                {% block reciboAluno %}{{ recibo.Aluno }} 
+                    {% if recibo.cpfAluno != null %}      
+                        - CPF: {{ recibo.cpfAluno }}             
+                    {% endif %}             
+                {% endblock %}
+
+                {% block reciboResponsavel %}
+                {% if recibo.Responsavel != recibo.Aluno%}
+                        {{ recibo.Responsavel }}
+                        {% if recibo.cpfResponsavel != null %}      
+                        - CPF: {{ recibo.cpfResponsavel }}             
+                        {% endif %} 
+                {% endif %} 
+                        {% endblock %}
+
+                {% block descricaoItem %}{{ recibo.descricaoItem }}{% endblock %}

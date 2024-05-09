@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistAlun_3_financeiras" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="840" leftMargin="2" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7ebab0c4-3fec-4929-ab08-9382263b82f2">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="aluno_id" class="java.lang.String"/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select 
+		observacao,
+		numero_parcela_documento,
+		date_format(data_vencimento,'%d/%m/%Y') as data_vencimento,
+		replace(replace(replace(format(valor_original, 2), ',', ';'), '.', ','), ';', '.') AS valor_original,
+		'' as valor_liquido,
+		case situacao
+			when 'LIQ' then
+				date_format(data_prorrogacao,'%d/%m/%Y') 
+			else ''
+		end as data_pagto,
+		replace(replace(replace(format(valor_original-valor_saldo_devedor, 2), ',', ';'), '.', ','), ';', '.') AS valor_pago,
+		'' as numero_boleto
+from titulo_receber
+where franqueada_id = $P{franqueada_id}
+	and aluno_id = $P{aluno_id}]]>
+	</queryString>
+	<field name="observacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="observacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="titulo_receber"/>
+	</field>
+	<field name="numero_parcela_documento" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="numero_parcela_documento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="titulo_receber"/>
+	</field>
+	<field name="data_vencimento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="data_vencimento"/>
+	</field>
+	<field name="valor_original" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="valor_original"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="titulo_receber"/>
+	</field>
+	<field name="valor_liquido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="valor_liquido"/>
+	</field>
+	<field name="data_pagto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="data_pagto"/>
+	</field>
+	<field name="valor_pago" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="valor_pago"/>
+	</field>
+	<field name="numero_boleto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero_boleto"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="13" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="290" height="13" uuid="2449a367-f104-40c5-b378-94ee342b64dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1054026a-ac4b-446b-82e9-e43969ee2432"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="0" width="40" height="13" uuid="4932501c-ab67-4f8d-a7d8-56c2c69810ef">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c2ceb8c-1aa4-4cfb-8f51-00352a108ef7"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="0" width="75" height="13" uuid="f230daf7-0d6d-42d9-aa5c-b12cd1039f73">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c18ca5ad-4a5a-4ef5-a027-1a227c48083b"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="407" y="0" width="80" height="13" uuid="d636c9cd-3090-4777-97a8-e0d36ea14836">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="0" width="75" height="13" uuid="d2a7444f-f4bb-4ebf-8c22-19360fba8417">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32917526-6174-4870-866c-c38859b1ca8f"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Líq.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="562" y="0" width="80" height="13" uuid="7aff82fe-d808-4d3f-ba09-b943710356b6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a6689724-c310-4410-9c5a-84fd4b98c0a2"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pago Dia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="642" y="0" width="75" height="13" uuid="befa6e59-94dc-4ce3-a0c1-58bd5b748c40">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3eba2b18-1454-4cbc-86f5-ec20d235ca55"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="717" y="0" width="70" height="13" uuid="f42cffe9-cfde-4c89-92e3-971d9cd45ac2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="34059e3c-a60f-48f8-b85d-e5ffe0525d46"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Boleto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="290" height="14" uuid="d740d2ea-99e8-4352-8260-0238bef51785">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1054026a-ac4b-446b-82e9-e43969ee2432"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="0" width="40" height="14" uuid="86fee392-e430-440a-84d0-b47edd0aadc7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c2ceb8c-1aa4-4cfb-8f51-00352a108ef7"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_parcela_documento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="0" width="75" height="14" uuid="f1c3d499-c44f-4e63-ae84-1ea00490d130">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c18ca5ad-4a5a-4ef5-a027-1a227c48083b"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_vencimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="407" y="0" width="80" height="14" uuid="00bde8c3-ee9a-403d-87d8-74fcd70d0ead">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor_original}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="487" y="0" width="75" height="14" uuid="3482a165-6c3c-4c18-8f1e-bccfd9783bb4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32917526-6174-4870-866c-c38859b1ca8f"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor_liquido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="562" y="0" width="80" height="14" uuid="0f9f3b01-e4b1-4c7b-99ad-b861d7b7c7f1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a6689724-c310-4410-9c5a-84fd4b98c0a2"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_pagto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="642" y="0" width="75" height="14" uuid="00e0d38d-d2b7-4745-b785-563582803645">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3eba2b18-1454-4cbc-86f5-ec20d235ca55"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor_pago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="717" y="0" width="70" height="14" uuid="4836ae41-cb2b-4516-84eb-f5fbc658a622">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="34059e3c-a60f-48f8-b85d-e5ffe0525d46"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_boleto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,186 @@
+{
+  "dados": [
+    {
+      "descricao": "Plano 32 aulas",
+	  "fixtureReference": "planejamento_licao32aulas",
+	  "licaos": [
+		{
+			"descricao": "Lesson 1",
+			"fixtureReferenceLicao": "licao1"
+		},		
+		{
+			"descricao": "Lesson 2 - B1L02",
+			"fixtureReferenceLicao": "licao2"
+		},		
+		{
+			"descricao": "Lesson 3 + CA",
+			"fixtureReferenceLicao": "licao3"
+		},		
+		{
+			"descricao": "Lesson 4 + CA",
+			"fixtureReferenceLicao": "licao4"
+		},		
+		{
+			"descricao": "Lesson 5",
+			"fixtureReferenceLicao": "licao5"
+		},		
+		{
+			"descricao": "Lesson 6",
+			"fixtureReferenceLicao": "licao6"
+		},		
+		{
+			"descricao": "Lesson 7 + CA - B1L07",
+			"fixtureReferenceLicao": "licao7"
+		},		
+		{
+			"descricao": "Lesson 8 - B1L08",
+			"fixtureReferenceLicao": "licao8"
+		},		
+		{
+			"descricao": "Lesson 9",
+			"fixtureReferenceLicao": "licao9"
+		},		
+		{
+			"descricao": "Lesson 10",
+			"fixtureReferenceLicao": "licao10"
+		},		
+		{
+			"descricao": "Lesson 11",
+			"fixtureReferenceLicao": "licao11"
+		},		
+		{
+			"descricao": "Lesson 12 + CA",
+			"fixtureReferenceLicao": "licao12"
+		},		
+		{
+			"descricao": "Lesson 13",
+			"fixtureReferenceLicao": "licao13"
+		},		
+		{
+			"descricao": "Lesson 14 - B1L14",
+			"fixtureReferenceLicao": "licao14"
+		},		
+		{
+			"descricao": "Lesson 15 - B1L15",
+			"fixtureReferenceLicao": "licao15"
+		},		
+		{
+			"descricao": "Lesson 16",
+			"fixtureReferenceLicao": "licao16"
+		},		
+		{
+			"descricao": "Lesson 17 - Get Composition",
+			"fixtureReferenceLicao": "licao17"
+		},		
+		{
+			"descricao": "MID-TERM TEST",
+			"fixtureReferenceLicao": "licaoMidTerm"
+		},		
+		{
+			"descricao": "Lesson 18 + CA",
+			"fixtureReferenceLicao": "licao18"
+		},		
+		{
+			"descricao": "Lesson 19 - B1L19",
+			"fixtureReferenceLicao": "licao19"
+		},		
+		{
+			"descricao": "Lesson 20 + CA",
+			"fixtureReferenceLicao": "licao20"
+		},		
+		{
+			"descricao": "Lesson 21",
+			"fixtureReferenceLicao": "licao21"
+		},		
+		{
+			"descricao": "Lesson 22 + CA ",
+			"fixtureReferenceLicao": "licao22"
+		},		
+		{
+			"descricao": "Lesson 23",
+			"fixtureReferenceLicao": "licao23"
+		},		
+		{
+			"descricao": "Lesson 24 ",
+			"fixtureReferenceLicao": "licao24"
+		},		
+		{
+			"descricao": "Lesson 25 - B1L25",
+			"fixtureReferenceLicao": "licao25"
+		},		
+		{
+			"descricao": "Lesson 26 - B1L26",
+			"fixtureReferenceLicao": "licao26"
+		},		
+		{
+			"descricao": "Lesson 27 + CA - B1L27",
+			"fixtureReferenceLicao": "licao27"
+		},		
+		{
+			"descricao": "Lesson 28",
+			"fixtureReferenceLicao": "licao28"
+		},		
+		{
+			"descricao": "Lesson 29 - B1L29",
+			"fixtureReferenceLicao": "licao29"
+		},		
+		{
+			"descricao": "Lesson 30 - Get Composition",
+			"fixtureReferenceLicao": "licao30"
+		},		
+		{
+			"descricao": "FINAL TEST",
+			"fixtureReferenceLicao": "licaoFinalTest"
+		}		
+	  ]
+    },
+    {
+      "descricao": "Plano 8 Aulas",
+	  "fixtureReference": "planejamento_licao8aulas",
+	  "licaos": [
+		{
+			"descricao": "Lesson 1",
+			"fixtureReferenceLicao": "licaoAulas1"
+		},
+		{
+			"descricao": "Lesson 2",
+			"fixtureReferenceLicao": "licaoAulas2"
+		},
+		{
+			"descricao": "Lesson 3",
+			"fixtureReferenceLicao": "licaoAulas3"
+		},
+		{
+			"descricao": "Lesson 4",
+			"fixtureReferenceLicao": "licaoAulas4"
+		},
+		{
+			"descricao": "Lesson 5",
+			"fixtureReferenceLicao": "licaoAulas5"
+		},
+		{
+			"descricao": "Lesson 6",
+			"fixtureReferenceLicao": "licaoAulas6"
+		},
+		{
+			"descricao": "Lesson 7",
+			"fixtureReferenceLicao": "licaoAulas7"
+		},
+		{
+			"descricao": "Lesson 8",
+			"fixtureReferenceLicao": "licaoAulas8"
+		}
+	  ]
+    },	
+    {
+      "descricao": "Plano 1 Aula",
+	  "fixtureReference": "planejamento_licao1aula",
+	  "licaos": [
+		{
+			"descricao": "Lesson 1",
+			"fixtureReferenceLicao": "licao"
+		}
+	  ]
+    }	
+  ]
+}

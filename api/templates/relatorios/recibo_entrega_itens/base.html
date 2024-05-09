@@ -1,0 +1,265 @@
+    {% extends "relatorios/pages.html" %}
+
+    
+    {% block page %}
+    <style>
+        
+        body{
+            
+            font-size: 0.8em;
+        }
+        
+        
+
+        .imagem-logo {
+            width: 150px;
+        }
+        
+        .titulo-empresa {
+            position: absolute; 
+            padding-top: 10px;
+            padding-left: 0.6cm;
+        }
+        
+        .numero-recibo {
+            position: absolute; 
+            padding-top: 10px; 
+            padding-left: 11.5cm;
+            text-align: right;
+            width: 153px;
+        }
+
+        .titulo-recibo { corpo-impressao
+            position: relative; 
+            padding-top: 10px; 
+            padding-bottom: 10px; 
+            padding-left: 1.8cm;
+            font-size: 1.5em;
+            text-align: center;
+            
+        }
+
+        .corpo-impressao{ 
+            position: relative; 
+            padding-left: 0.3cm;
+            font-size: 1.2em;
+            text-align: left;
+            
+        }
+        
+        .data-impressao {
+            position: absolute; 
+            padding-top: 29px;
+            padding-left: 14cm;       		
+        }
+        
+        .endereco-empresa {
+            position: absolute; 
+            padding-top: 50px; 
+            word-wrap: break-word; 
+            width: 550px;
+            padding-left: 0.6cm;
+        }
+        
+        .data-impressao-completo {
+            width: 100%;
+            text-align: right;
+        }
+        
+        .texto-tabela-esquerda {
+            text-align: left;
+        }        	
+        
+        .texto-recebi-empresa {
+            padding-left: 100px;
+        }
+        
+        .texto-recebi-importancia {
+            padding-left: 50px;
+        }
+        
+        .texto-referente-a {
+            padding-left: 1cm;
+        }
+        
+        .texto-tabela-esquerda.quebra-linha-tabela {
+            width: 1240px;
+            word-wrap: break-word;
+        }
+        
+        .in-recibo {
+            padding: 25px 0;
+        }
+        .in-recibo:nth-child(n+2) {
+            border-top: 2px dashed #000;
+        }
+        
+    
+        .recibo-assinatura {
+            display: flex;
+        }
+        .recibo-assinatura b {
+            margin-right: 30px
+        }
+        .recibo-assinatura label:last-child {
+            display: block;
+        }
+    </style>
+    <div>
+            {% for recibo in recibos %}
+            {% block recibo %}
+            <div class="page decorate">
+                {% set nItens = recibos|length%}
+
+                {% set nAluno = block('reciboAluno') %}
+                {% set nResponsavel = block('reciboResponsavel') %}
+            <div class="in-recibo">
+                    <div>
+                        {% block logoInflux %}
+                            <img class="imagem-logo" src="{{ absolute_url(asset("/templates/relatorios/influx_logo.png")) }}" alt="Teste"/>
+                        {% endblock %}    		
+                        <span>
+                            <b class="titulo-empresa">
+                                {% block nomeFranqueada %}inFlux Champagnat{% endblock %}
+                            </b>
+                            <b class="numero-recibo">
+                                Recibo Nº {% block reciboNumero %}1{% endblock %}
+                            </b>
+                            <b class="data-impressao">
+                                {% block dataImpressao %}08/10/2018{% endblock %}
+                            </b>
+                            <span class="endereco-empresa">
+                                {% block enderecoCompletoEmpresa %}CHAMPIONS ENSINO DE IDIOMAS LTDA ME - C.N.P.J. 25.188.695/0001-08, Rua Professora Ephigênia do Rego Barros, 102, Champagnat, Curitiba-PR{% endblock %}
+                            </span>
+                                <b class="titulo-recibo">
+                                    RECIBO DE ENTREGA DE ITENS
+                                </b>
+                                <br>
+                                <br>                          
+                    </span>
+                    </div>
+                    <div class="data-impressao-completo">
+                        <span>
+                        Impressão {% block dataImpressaoCompleto %}99/99/9999 99:99:99{% endblock %}
+                        </span>
+                    </div>        
+                    <hr>        
+                    <div class="corpo-impressao">
+                        <span> Recebi <b>  {{ block('qtdItens') }}</b> do item: <b>{{ block('descricaoItem') }}
+                            </b>no valor de <b>{{ block('valorTotal') }} - ( {{ block('valorExtenso') }}  )
+                            </b>da unidade:  <b>{{ block('nomeFranqueada') }}
+                            </b>vendida em <b>{{ block('dataEmissao') }}</b>                 
+                            <br>
+                            <br>
+                            <br>
+                            Data da entrega: {{ block('dataEntrega') }}
+                            <br>
+                            <br>
+                            <br>                    
+                    </div>               
+                    <div>
+                        <div class="recibo-assinatura">
+                            <b></b>
+                            <div>
+                                <label>________________________________________</label>
+                                <label>Aluno: {{ block('reciboAluno') }} </label>
+                            </div>
+                        </div>      
+                        <br>
+                        <br>
+                        <br>
+                        <br>                     
+                    </div>
+                    {% if nResponsavel|length > 79 %}  
+                    <div>
+                        <div class="recibo-assinatura">
+                            <b></b>
+                            <div>
+                                <label>________________________________________</label>
+                                <label>Responsavel: {{nResponsavel}} </label>
+                            </div>
+                        </div>      
+                        <br>
+                    </div>
+                    {% endif %}
+                </div>
+    
+                <div class="in-recibo">
+                    <div>
+                        {{ block('logoInflux') }}        			
+                        <span>
+                            <b class="titulo-empresa">
+                                {{ block('nomeFranqueada') }}        			    
+                            </b>
+                            <b class="numero-recibo">
+                                Recibo Nº {{ block('reciboNumero') }}
+                            </b>
+                            <b class="data-impressao">
+                                {{ block('dataImpressao') }}
+                            </b>
+                            <span class="endereco-empresa">
+                                {{ block('enderecoCompletoEmpresa') }}            			 
+                            </span>
+                            <b class="titulo-recibo">
+                                RECIBO DE ENTREGA DE ITENS
+                            </b>
+                            <br>
+                            <br> 
+                        </span>
+                    </div>
+
+                    <div class="data-impressao-completo">
+                        <span>
+                        Impressão {{ block('dataImpressaoCompleto') }}
+                        </span>
+                    </div>        
+                    <div class="corpo-impressao">
+                        <span> Recebi <b>  {{ block('qtdItens') }}</b> do item: <b>{{ block('descricaoItem') }}
+                            </b>no valor de <b>{{ block('valorTotal') }} - ( {{ block('valorExtenso') }}  )
+                            </b>da unidade:  <b>{{ block('nomeFranqueada') }}
+                            </b>vendida em <b>{{ block('dataEmissao') }}</b>                 
+                            <br>
+                            <br>
+                            <br>
+                            Data da entrega: {{ block('dataEntrega') }}
+                            <br>
+                            <br>
+                            <br>                    
+                    </div>               
+                    <div>
+                        <div class="recibo-assinatura">
+                            <b></b>
+                            <div>
+                                <label>________________________________________</label>
+                                <label>Aluno: {{ block('reciboAluno') }} </label>
+                            </div>
+                        </div>      
+                        <br>
+                        <br>
+                        <br>
+                        <br>                     
+                    </div>
+                    {% if nResponsavel|length > 79 %}  
+                    <div>
+                        <div class="recibo-assinatura">
+                            <b></b>
+                            <div>
+                                <label>________________________________________</label>
+                                <label>Responsavel: {{nResponsavel}} </label>
+                            </div>
+                        </div>      
+                        <br>
+                    </div>
+                    {% endif %} 
+                </div>  
+                
+            
+            </div>
+                    
+            {% endblock %}
+            {% endfor %}
+            <div class="pages-footer"></div>
+
+    </div>     
+        
+    {% endblock %}

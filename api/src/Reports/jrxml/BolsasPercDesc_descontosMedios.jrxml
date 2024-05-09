@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BolsasPercDesc_descontosMedios" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="2" uuid="7cc15c60-b075-41f9-827e-43ec2a942bf7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<parameter name="semestre_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select CONCAT(replace(FORMAT(avg(percentual_desconto),2),'.',','),' %') as desconto_medio 
+from item_conta_receber
+inner join conta_receber
+	on item_conta_receber.conta_receber_id = conta_receber.id
+left join contrato
+	on conta_receber.contrato_id = contrato.id
+inner join semestre
+	on contrato.semestre_id = semestre.id
+left join turma	
+	on contrato.turma_id = turma.id
+where percentual_desconto > 0
+	and conta_receber.franqueada_id = $P{franqueada_id}
+	and turma.semestre_id = $P{semestre_id}]]>
+	</queryString>
+	<field name="desconto_medio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="desconto_medio"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<staticText>
+				<reportElement x="6" y="2" width="79" height="11" uuid="2d7d24c0-ca3a-435f-b33e-dfd493473f91">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c09793d-f4d4-4c1a-a22c-ffa3f9ebb5eb"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desconto Médio:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="91" y="2" width="90" height="11" uuid="5b106ff0-1ca9-4c13-bee4-0f3c522b0091">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c09793d-f4d4-4c1a-a22c-ffa3f9ebb5eb"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desconto_medio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

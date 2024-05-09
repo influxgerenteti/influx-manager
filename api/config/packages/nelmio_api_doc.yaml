@@ -1,0 +1,61 @@
+nelmio_api_doc:    
+    documentation:
+        schemes: [http, https]                
+        info:
+            title: inFlux REST
+            description: Documentação de endpoints da inFlux
+            version: 2.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer { jwt }'
+                name: Authorization
+                in: header
+            Franqueada:
+                type: apiKey
+                description: Id da franqueada
+                name: Franqueada
+                in: header
+            URLModulo:
+                type: apiKey
+                description: URL Modulo
+                name: URLModulo
+                in: header
+        security:
+            - Bearer: []
+            - Franqueada: []
+            - URLModulo: []
+    areas: # to filter documented areas
+        default:
+            path_patterns: [ ^/api ] # Accepts routes under /api except /api/doc
+        generic:
+            path_patterns: [ ^/api/generic ]
+        classificacao_aluno:
+            path_patterns: [ ^/api/classificacao_aluno ]
+        franqueadas:
+            path_patterns: [ ^/api/franqueada ]
+        favorito:
+            path_patterns: [ ^/api/favorito ]
+        log:
+            path_patterns: [ ^/api/log ]
+        modulo:
+            path_patterns: [ ^/api/modulo ]
+        usuario:
+            path_patterns: [ ^/api/usuario ]
+        categoria:
+            path_patterns: [ ^/api/categoria ]
+        pessoa:
+            path_patterns: [ ^/api/pessoa ]
+        aluno:
+            path_patterns: [ ^/api/aluno ]        
+        tipo_movimento_estoque:
+            path_patterns: [ ^/api/tipo_movimento_estoque ]
+        banco:
+            path_patterns: [ ^/api/banco ]
+        tipo_nota:
+            path_patterns: [ ^/api/tipo_nota ]
+        item:
+            path_patterns: [ ^/api/item ]
+        integracao:
+            path_patterns: [ ^/integracao/ ]
+ 

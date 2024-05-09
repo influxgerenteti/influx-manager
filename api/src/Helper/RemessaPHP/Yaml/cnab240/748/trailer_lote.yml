@@ -1,0 +1,19 @@
+qtde_titulo_cobranca_vinculada:
+  pos: [47, 52]
+  picture: 'X(6)'
+  default: ''
+
+valor_total_titulo_vinculada:
+  pos: [53, 69]
+  picture: '9(15)V9(2)'
+  default: '0'
+
+qtde_titulo_cobranca_caucionada:
+  pos: [70, 75]
+  picture: 'X(6)'
+  default: '000000'
+
+valor_total_titulo_caucionada:
+  pos: [76, 92]
+  picture: 'X(17)'
+  default: '00000000000000000'

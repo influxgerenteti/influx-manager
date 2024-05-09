@@ -1,0 +1,14 @@
+codigo_segmento:
+  pos: [14, 14]
+  picture: 'X(1)'
+  default: 'Q'
+
+bairro:
+  pos: [114, 128]
+  picture: 'X(15)'
+  default: ''
+
+uso_exclusivo_febraban_02:
+  pos: [210, 212]
+  picture: 'X(3)'
+  default: '000'

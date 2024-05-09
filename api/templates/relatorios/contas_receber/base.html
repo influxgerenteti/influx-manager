@@ -1,0 +1,125 @@
+{% extends "relatorios/pages.html" %}
+
+
+{% block page %}
+<style>
+    body {
+        font-size: 0.6em;
+
+    }
+    .imagem-logo {
+        width: 80px;
+    }
+
+    .titulo-relatorio {
+        text-align: center;
+        font-size: 20px;
+        position: absolute;
+        padding-top: 10px;
+        padding-left: 2.6cm;
+    }
+
+    .data-impressao {
+        position: absolute;
+        padding-top: 59px;
+        padding-left: 14cm;
+        font-size: 9px;
+    }
+
+    .data-impressao-completo {
+        text-align: right;
+            position: fixed; /* Alterei para 'fixed' para garantir que fique no rodapé em qualquer ponto da página */
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+    }
+
+    .texto-tabela-esquerda-rodape {
+        text-align: right;
+        font-size: 12px;
+    }
+    .texto-tabela-esquerda {
+        text-align: left;
+        padding-left: 0.15cm
+    }
+
+    .texto-tabela-esquerda.quebra-linha-tabela {
+        width: 1240px;
+        word-wrap: break-word;
+    }
+
+    .cabecalho{
+        height: 150px;
+    }
+
+    tr:nth-child(even) {
+                background-color: #eeeeee;
+            }
+
+    .page{
+        height: auto !important;
+    }
+
+</style>
+<div>
+    <div class="page decorate">
+       
+       <div class="cabecalho">
+        {% block logoInflux %}
+        <img class="imagem-logo" src="{{ absolute_url(asset("/templates/relatorios/influx_logo.png")) }}" alt="Teste"/>
+        {% endblock %}
+        <div>
+            <span>
+                <b class="titulo-relatorio">Relatório do Contas à Receber </b>
+                <b class="data-impressao">Data impressão: {% block dataImpressao %}08/10/2018{% endblock %}</b>
+            </span>
+        </div>
+       </div>
+       
+
+    
+        <div >
+            <hr>
+            <div>
+                <table width="100%">
+                    <thead>
+                      
+                        <th class="texto-tabela-esquerda">Titulo</th>
+                        <th class="texto-tabela-esquerda">Aluno (Sacado)</th>
+                        <th class="texto-tabela-esquerda">Vencimento</th>
+                        <th class="texto-tabela-esquerda">Categoria</th>
+                        <th class="texto-tabela-esquerda">Metodo</th>
+                        <th class="texto-tabela-esquerda">Valor</th>
+                        <th class="texto-tabela-esquerda">Saldo</th>
+                        <th class="texto-tabela-esquerda">Conciliado</th>
+                        <th class="texto-tabela-esquerda">Situação</th>
+             
+                    </thead>
+                    <tbody>
+                  
+                    
+                            {% block contasReceberTabela %}
+                            {% endblock %}
+                       
+                    </tbody>
+                    
+                </table>
+            </div>
+            <hr>
+               
+            </div>
+            
+            {% block totais %}
+            {% endblock %}
+        </div>
+
+
+            <div class="pages-footer">
+                  
+            </div>
+    
+        </div>
+    
+    </div>
+    
+{% endblock %}

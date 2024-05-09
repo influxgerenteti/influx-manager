@@ -1,0 +1,156 @@
+{% extends "relatorios/pages.html" %}
+
+
+{% block page %}
+<style>
+    .decorate {
+        background-size: cover;
+    }
+    body{        
+        font-size: 0.65em;
+    }
+    .imagem-logo {
+        width: 120px;
+        margin: 10px;
+    }   
+    .principal {
+        align-items: center;
+        display: flex;
+    }
+    .conteudo {
+        height: 30px;
+        padding: 30px;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th {
+        text-align: left;
+        padding: 5px;
+    }
+    td,
+    th {
+        padding: 5px;
+        border: 2px solid black;
+    }
+    h2 {
+        color: rgb(175, 171, 171);
+    }.empty{
+            grid-area: cabecalho;
+            background-color: #1867c0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 10px;
+            z-index: 1;
+            box-shadow: 0px 4px 9px -2px rgba(0,0,0,0.75);
+            font-weight: 300;
+            font-size: 2rem;
+        }
+    .info{
+        text-align: right;
+    }
+    .schedule{
+        border-bottom: 2px solid #000000;
+        height: 0.5cm;
+        text-align: center;
+        vertical-align: middle;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        margin: 0.5cm;
+    }
+    table{
+        width: 100%;
+    }
+    tr{
+        height: 0.3cm;
+    }
+</style>
+<div>
+    {% if turmas != null %}   
+            {% for turma in turmas %}
+            {% block turma %}
+            <div class="page decorate">
+
+                <div class="principal">
+                    <img class="imagem-logo" src="{{ absolute_url(asset("/templates/relatorios/influx_logo.png")) }}" alt="Teste"/>
+                    <table class="conteudo">
+
+                        <tr>
+                            <th class="info">Turma:</th>
+                            <td colspan="3">{{turma.turma}}</td>
+                            <th class="info">Curso:</th>
+                            <td colspan="2">{{turma.curso}}</td>
+                        </tr>
+                        <tr>
+                            <th class="info">Horario:</th>
+                            <td colspan="3">{{turma.horario}}</td>
+                            <th class="info">Professor:</th>
+                            <td colspan="2">{{turma.professor}}</td>
+                        </tr>
+                        <tr>
+                            <th class="info">Inicio:</th>
+                            <td colspan="3">{{turma.data_inicio}}</td>
+                            <th class="info">Estágio:</th>
+                            <td colspan="2">{{turma.estagio}}</td>
+                        </tr>
+                        <tr>
+                            <th class="info">Termino:</th>
+                            <td colspan="3">{{turma.data_fim}}</td>
+                            <th class="info">Sala:</th>
+                            <td colspan="2">{{turma.sala}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="schedule">
+                    SCHEDULE
+                </div>
+                
+            
+            
+                <div>
+            
+                    <table class="conteudo">
+                        <tr>
+                            <th>Data</th>
+                            <th>Lição</th>
+                            <th>Descrição</th>
+                            <td>Em dia</td>
+                            <td>Atras.</td>
+                            <td>Adiant</td>
+                        </tr>
+                        {% for item in turma.itens %}
+                        {% block item %}
+                        <tr>
+                            <td><span>{{item.data_aula |date("d/m/yy")}}</span></td>
+                            <td><span>{{item.numero_licao}}</span></td>
+                            <td><span>{{item.descricao_licao}}</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endblock %}
+                        {% endfor %}
+
+                    </table>
+            
+                </div.> 
+
+            </div>
+
+            {% endblock %}
+            {% endfor %}
+
+            <div class="pages-footer"></div>
+        {% else %} 
+            <div >
+                <span class ="empty">Sem dados</span>
+            </div> 
+        {% endif %}    
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ClassRecord" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7287bbef-f392-420c-a693-ed3366773d1b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<parameter name="nomeFranqueada" class="java.lang.String"/>
+	<parameter name="logoInflux" class="java.lang.String"/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<parameter name="subreportsPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA["."]]></defaultValueExpression>
+	</parameter>
+	<parameter name="turma_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select	turma.descricao as class,
+		semestre.descricao as semestre,
+		turma_aula.data_aula as date_lesson, 
+		licao.numero as number_lesson, 
+		licao.descricao as lesson, 
+		sala.descricao as classroom,
+		pessoa.nome_contato as teacher,
+		horario.descricao as days_time,
+		livro.descricao as book
+
+from turma 
+
+inner join turma_aula
+	on turma.id = turma_aula.turma_id
+inner join licao
+	on turma_aula.licao_id = licao.id
+
+inner join horario
+	on turma.horario_id = horario.id
+
+left join sala_franqueada
+	on turma.sala_franqueada_id = sala_franqueada.id
+inner join sala
+	on sala_franqueada.sala_id = sala.id
+
+inner join semestre
+	on turma.semestre_id = semestre.id
+
+inner join livro
+	on turma.livro_id = livro.id	
+
+left join funcionario
+	on turma.funcionario_id = funcionario.id
+inner join pessoa
+	on funcionario.pessoa_id = pessoa.id
+
+where turma.id = $P{turma_id}
+and turma.franqueada_id = $P{franqueada_id}]]>
+	</queryString>
+	<field name="class" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="class"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="turma"/>
+	</field>
+	<field name="semestre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="semestre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="semestre"/>
+	</field>
+	<field name="date_lesson" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="date_lesson"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="turma_aula"/>
+	</field>
+	<field name="number_lesson" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="number_lesson"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="licao"/>
+	</field>
+	<field name="lesson" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="lesson"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="licao"/>
+	</field>
+	<field name="classroom" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="classroom"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sala"/>
+	</field>
+	<field name="teacher" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="teacher"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<field name="days_time" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="days_time"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="horario"/>
+	</field>
+	<field name="book" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="book"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="livro"/>
+	</field>
+	<pageHeader>
+		<band height="62" splitType="Stretch">
+			<textField>
+				<reportElement x="156" y="10" width="164" height="20" uuid="4591105c-b7af-41a6-ae55-8ec62b31948a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{class}+" "+$F{semestre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="10" width="96" height="20" uuid="7a9c4e5e-5794-4f73-9fd8-4b7ada83de86"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{classroom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="10" width="100" height="20" uuid="f6748dde-ab49-400f-97d6-faf70c01663a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{teacher}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="35" width="178" height="20" uuid="f94230f0-e5f3-48a5-aacf-75acdb559b3b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{days_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="35" width="100" height="20" uuid="b8177f52-2ef2-414d-8419-19d47a17f515"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{book}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="40"/>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="3" width="20" height="20" uuid="3a0a4024-ec3e-464b-a994-3e00d891554f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{number_lesson}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="3" width="100" height="20" uuid="1aa2de89-81c6-4e74-99b4-dffe73283783"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_lesson}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="147" y="3" width="238" height="20" uuid="81d0d4b9-61a9-40e8-a077-bcfe35055919"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lesson}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="177">
+			<subreport isUsingCache="false" overflowType="Stretch">
+				<reportElement x="0" y="0" width="555" height="177" uuid="f34d7ae9-8f58-4400-a4d2-864f5cd8faa2"/>
+				<subreportParameter name="turma_id">
+					<subreportParameterExpression><![CDATA[$P{turma_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="franqueada_id">
+					<subreportParameterExpression><![CDATA[$P{franqueada_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{subreportsPath} +"/CR_alunos.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
+</jasperReport>

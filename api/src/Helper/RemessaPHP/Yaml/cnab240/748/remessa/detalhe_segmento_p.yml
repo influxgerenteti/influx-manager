@@ -1,0 +1,86 @@
+agencia_dv:
+  pos: [23,23]
+  picture: 'X(1)'
+  default: ''
+
+agencia_mais_cedente_dv:
+  # Padrão: deixa em branco
+  pos: [37, 37]
+  picture: 'X(1)'
+  default: ''
+
+nosso_numero:
+  # Nosso número
+  # Identificação do Título no Banco
+  # Número adotado pelo Banco Cedente para identificar o Título.
+  # Se a impressão for pelo Sicredi
+    # (A): é possível deixar em branco (sem preenchimento - o nº será gerado automaticamente pelo Banco) 
+    # ou então informar o Nosso Número devidamente preenchido.
+    # (B) Se a impressão for pelo Beneficiário/Cedente: informar o Nosso Número conforme exemplo abaixo.
+    # A nomenclatura correta é: "192XXXXXD", onde: 19 - Ano atual 2 a 9 - Byte de geração somente
+    # será "1" se forem boletos préimpressos. XXXXX - Número sequencial D - Dígito verificador calculado
+  pos: [38,57]
+  picture: 'X(20)'
+
+codigo_carteira:
+  # Código da Carteira
+  # Código adotado pela FEBRABAN, para identificar a característica dos títulos dentro das modalidades de
+  # cobrança existentes no banco.
+  # ‘1’ = Cobrança Simples
+  pos: [58,58]
+  picture: '9(1)'
+  default: '1'
+
+forma_cadastramento:
+  # Código adotado pela FEBRABAN, para indicar a existência de registro do título no banco.
+  # ‘1’ = Com Cadastramento (Cobrança Registrada)
+  pos: [59,59]
+  picture: '9(1)'
+  default: '1'
+
+numero_documento:
+  # Número adotado e controlado pelo Cliente, para identificar o título de cobrança.
+  # Poderá conter número de duplicata, no caso de cobrança de duplicatas; número da apólice, no caso de
+  # cobrança de seguros, etc. Campo de preenchimento obrigatório.
+  pos: [63,77]
+  picture: 'X(15)'
+
+agencia_cobradora:
+  # O Sicredi não usa esse campo, preencher com zeros
+  pos: [101, 105]
+  picture: '9(5)'
+  default: '00000'
+
+agencia_cobradora_dv:
+  pos: [106, 106]
+  picture: 'X(1)'
+  default: ''
+
+codigo_juros_mora:
+  # ‘1’ = Valor por Dia
+  # ‘2’ = Taxa Mensal
+  # ‘3’ = Isento
+  pos: [118,118]
+  picture: '9(1)'
+
+valor_iof:
+  pos: [166, 180]
+  picture: '9(13)V9(2)'
+  default: '000000000000000'
+
+codigo_baixa:
+  pos: [224, 224]
+  picture: '9(1)'
+  default: '1'
+
+prazo_baixa:
+  # O Sicredi não utiliza esse campo, preencher com zeros
+  pos: [225, 227]
+  picture: '9(3)'
+  default: '000'
+
+uso_exclusivo_banco_03:
+  # O Sicredi não utiliza esse campo, preencher com zeros
+  pos: [230, 239]
+  picture: '9(10)'
+  default: '0000000000'

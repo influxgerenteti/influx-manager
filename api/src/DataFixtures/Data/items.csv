@@ -1,0 +1,85 @@
+﻿A Camino 1;UN;3;0;60.00;129;livros;tipoItemProdutoP;it_acamino_1
+A Camino 2;UN;2;0;60.00;129;livros;tipoItemProdutoP;it_acamino_2
+A Camino 3;UN;1;0;60.00;129;livros;tipoItemProdutoP;it_acamino_3
+A Camino 4;UN;2;0;60.00;129;livros;tipoItemProdutoP;it_acamino_4
+A.C A Camino 1 (Separado);UN;2;0;60.00;100;livros;tipoItemProdutoP
+Actividades de Comunicación 01;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Backpack 1;UN;8;0;60.00;129;livros;tipoItemProdutoP
+Backpack 2;UN;3;0;60.00;129;livros;tipoItemProdutoP
+Backpack 3;UN;4;0;60.00;129;livros;tipoItemProdutoP
+Backpack Starter;UN;3;0;60.00;129;livros;tipoItemProdutoP
+Book 1;UN;11;0;60.00;129;livros;tipoItemProdutoP;it_book_1
+Book 2;UN;13;0;60.00;129;livros;tipoItemProdutoP;it_book_2
+Book 3;UN;3;0;60.00;129;livros;tipoItemProdutoP;it_book_3
+Book 4;UN;3;0;60.00;129;livros;tipoItemProdutoP;it_book_4
+Book 5;UN;2;0;60.00;129;livros;tipoItemProdutoP;it_book_5
+C.A. Book 1 (Separado);UN;2;0;60.00;100;livros;tipoItemProdutoP
+C.A. Book 2 (Separado);UN;2;0;60.00;100;livros;tipoItemProdutoP
+C.A. Book 3 (Separado);UN;2;0;60.00;100;livros;tipoItemProdutoP
+C.A. Book 4 (Separado);UN;2;0;60.00;100;livros;tipoItemProdutoP
+Cutting Edge;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Dicionário Espanhol;UN;1;0;60.00;129;livros;tipoItemProdutoP
+Dicionário Inglês;UN;3;0;60.00;129;livros;tipoItemProdutoP
+Dominio;UN;2;0;60.00;129;livros;tipoItemProdutoP;it_dominio
+Estojo;UN;32;0;60.00;129;livros;tipoItemProdutoP
+Junior 1;UN;14;0;60.00;129;livros;tipoItemProdutoP;it_junior_1
+Junior 2;UN;1;0;60.00;129;livros;tipoItemProdutoP
+Junior 3;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Junior Starter A;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Junior Starter B;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Market Leader Advanced;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Market Leader Intermediate;UN;4;0;60.00;129;livros;tipoItemProdutoP
+Market Leader Upper Intermediate;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Summit 1A;UN;3;0;60.00;129;livros;tipoItemProdutoP
+Summit 1B;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Summit 2A;UN;1;0;60.00;129;livros;tipoItemProdutoP
+Summit 2B;UN;2;0;60.00;129;livros;tipoItemProdutoP
+Tactics for TOEIC;UN;1;0;60.00;129;livros;tipoItemProdutoP;it_tactics_for_toeic
+Tema a Tema;UN;2;0;60.00;129;livros;tipoItemProdutoP
+TOEIC - Prova;UN;28;0;60.00;129;livros;tipoItemProdutoP
+Traveler;UN;16;0;60.00;129;livros;tipoItemProdutoP
+Vacation Plus 1;UN;1;0;60.00;129;livros;tipoItemProdutoP;it_vacation_plus_1
+Vacation Plus 2;UN;2;0;60.00;129;livros;tipoItemProdutoP;it_vacation_plus_2
+Vacation Plus 3;UN;3;0;60.00;129;livros;tipoItemProdutoP;it_vacation_plus_3
+Vacation Plus 4;UN;4;0;60.00;129;livros;tipoItemProdutoP;it_vacation_plus_4
+Produto inativo i;UN;4;0;60.00;129;livros;tipoItemProdutoP
+Taxa de Matrícula;;;;;150;pcMatricula;tipoItemTaxaMatriculaM;taxa_matricula
+Valor do Curso;;;;;1800;pcValorCurso;tipoItemValorCursoV;valor_curso
+Make up Class;;;;;25;makeUpClassPC;tipoItemReposicaoAulaR
+Make up Test;;;;;25;makeUpTestPC;tipoItemMakeUpTest
+Reposição prova Final;;;;;25;makeUpTestPC;tipoItemReposicaoAvaliacaoMF
+Reposição da recuperação prova Mid-Term;;;;;25;makeUpTestPC;tipoItemReposicaoAvaliacaoRM
+Reposição da recuperação prova Final;;;;;25;makeUpTestPC;tipoItemReposicaoAvaliacaoRF
+Atividade Extra;;;;;25;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Solicitação de Nivelamento;;;;;0;atividade_extraPC;tipoItemSolicitacaoNivelamentoSN
+Cobrança CRON;;;;;25;atividade_extraPC;tipoItemCobrancasCB
+Impressão de certificado;;;;;25;receita;tipoItemServicoS
+Impressão de boleto;;;;;0.5;receita;tipoItemServicoS
+Transferência de Turmas;;;;;0;receita;tipoItemTransferenciaTurma
+Personal 32 créditos;;;;;1800;matriculaPersonal;tipoItemValorCurso32Creditos
+Personal 48 créditos;;;;;1800;matriculaPersonal;tipoItemValorCurso48Creditos
+Personal 64 créditos;;;;;1800;matriculaPersonal;tipoItemValorCurso64Creditos
+Halloween Games;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Movie Session for Kids and Juniors;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Typical Food in English Speaking Countries;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+WorldCup;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+MusicSession;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+MusicSessionValentine’s;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+ConversationDay;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Face the Pie;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+The Voice inFlux;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Makeup Session;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Thanksgiving;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Climber Fluxie Educational Championship;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Beauty Day;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Mother's Day;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Cooking Class;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Hot Chocolate with Marshmallows/Milkshake Day;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Clase de Cocina;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Game Day;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Game Night;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Casino Night;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Día de Conversación – ¡Un Viaje a México!;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+inFlux Wine Tasting;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Easter Egg Hunt;;;;;30;atividade_extraPC;tipoItemAtivdadesExtrasAE
+Personal 64 créditos;;;;;25;matriculaPersonal;tipoItemValorCursoAvulsoCreditos

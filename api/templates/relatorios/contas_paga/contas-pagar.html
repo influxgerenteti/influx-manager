@@ -1,0 +1,103 @@
+{% extends "relatorios/pages.html" %}
+
+{% block page %}
+
+<style>
+    .page {
+        page-break-after: always;
+    }
+</style>
+
+{% include 'relatorios/shared/data-header.html' with {'data' : data|length > 0, 'url' : url} %}
+
+{% if data|length > 0 %}
+
+    {% include 'relatorios/shared/table-style.html' %}
+    
+    {% set perPage = 80 %}
+    {% set pages = data|length / perPage %}
+    {% set pages = pages|round(0, 'ceil') %}
+    {% set pages = pages < 1 ? 1 : pages|number_format %}
+    {% set qntLiquidados=0 %}
+    {% set qntVencidos=0 %}
+    {% set qntPendentes=0 %}
+    {% set valorTotal=0 %}
+    {% set valorPendente=0 %}
+    {% set valorVencido=0 %}
+
+    {% for page in range(0, (pages -1)) %}
+    <div class="page">
+        <h1 class="title">Relatório - Contas a Pagar</h1>
+        <span style="position: relative; top: -1cm;" class="text-left obs">{{ pages }}</span>
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-left obs">Favorecido</th>
+                    <th class="text-left obs">Observação</th>
+                    <th class="text-left">Situação</th>
+                    <th class="text-right">Total R$</th>
+                    <th class="text-center">Parcela</th>
+                    <th class="text-right">Movimentado R$</th>
+                    <th class="text-center">Vencimento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set initialIndex = (perPage * page) %}
+                {% for conta in data|slice(initialIndex, perPage) %}
+                <tr class="{{ loop.index is even ? 'even' : '' }}">
+                    <td class="text-left obs">{{ conta.destino }}</td>
+                    <td class="text-left obs">{{ conta.observacao }}</td>
+                    <td class="text-left">{{ conta.situacao }}</td>
+                    <td class="text-right">{{ conta.valor|number_format(2, ',', '.') }}</td>
+                    <td class="text-center">{{ conta.numero }}</td>
+                    <td class="text-right">{{ conta.valor_movimento|number_format(2, ',', '.') }}</td>
+                    <td class="text-center">{{ conta.data_vencimento }}</td>
+                </tr>
+                {% set qntLiquidados = qntLiquidados + (conta.situacao == 'Liquidado' ? 1 : 0) %}
+                {% set qntVencidos = qntVencidos + (conta.situacao == 'VENCIDO' ? 1 : 0) %}
+                {% set qntPendentes = qntPendentes + (conta.situacao == 'Pendente' ? 1 : 0) %}
+                {% set valorTotal = valorTotal + (conta.valor_movimento ? conta.valor_movimento : 0) %}
+                {% if conta.valor > 0 %}
+                    {% if conta.situacao == 'Pendente' %}
+                        {% set valorPendente = valorPendente + conta.valor %}
+                    {% endif %}
+                    {% if conta.situacao == 'VENCIDO' %}
+                        {% set valorVencido = valorVencido + conta.valor %}
+                    {% endif %}
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if loop.last %}
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center">Totais</th>
+                    <th class="text-right">Liquidado</th>
+                    <th class="text-right">Pendente</th>
+                    <th class="text-right">Vencidos</th>
+                    <th class="text-right">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="text-left">Quantidades</th>
+                    <td class="text-right">{{ qntLiquidados }}</td>
+                    <td class="text-right">{{ qntPendentes }}</td>
+                    <td class="text-right">{{ qntVencidos }}</td>
+                    <td class="text-right">{{ data|length }}</td>
+                </tr>
+                <tr class="even">
+                    <th class="text-left">Valores</th>
+                    <td class="text-right">{{ valorTotal|number_format(2, ',', '.') }}</td>
+                    <td class="text-right">{{ valorPendente|number_format(2, ',', '.') }}</td>
+                    <td class="text-right">{{ valorVencido|number_format(2, ',', '.') }}</td>
+                    <td class="text-right">{{ (valorPendente+valorTotal+valorVencido)|number_format(2, ',', '.') }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

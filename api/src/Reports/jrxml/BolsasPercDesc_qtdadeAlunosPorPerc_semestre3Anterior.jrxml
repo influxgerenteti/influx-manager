@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BolsasPerc" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="840" leftMargin="2" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2eec3783-8af0-4be4-a65c-fac5c2acf9cf">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<parameter name="semestre_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select distinct 
+ 	semestre.descricao,
+	CONCAT(replace(FORMAT(i1.percentual_desconto,2),'.',','),' %') as percentual_desconto,
+	(
+		select
+			count(i2.percentual_desconto)		
+		from item_conta_receber i2
+			inner join conta_receber cr
+				on i2.conta_receber_id = cr.id
+			left join contrato c
+				on cr.contrato_id = c.id
+		where i2.percentual_desconto = i1.percentual_desconto 
+			and c.bolsista = 0  
+	) as qntdade_nao_bolsistas,
+	(
+		select
+			count(i2.percentual_desconto)		
+		from item_conta_receber i2
+			inner join conta_receber cr
+				on i2.conta_receber_id = cr.id
+			left join contrato c
+				on cr.contrato_id = c.id
+		where i2.percentual_desconto = i1.percentual_desconto 
+			and c.bolsista = 1  
+	) as qntdade_bolsistas,
+	(
+		select
+			count(i2.percentual_desconto)		
+		from item_conta_receber i2
+		where i2.percentual_desconto = i1.percentual_desconto  
+	) as qntdade_total
+		
+from item_conta_receber i1
+inner join conta_receber
+	on i1.conta_receber_id = conta_receber.id
+left join contrato
+	on conta_receber.contrato_id = contrato.id
+inner join semestre
+	on contrato.semestre_id = semestre.id
+left join turma	
+	on contrato.turma_id = turma.id
+
+where i1.percentual_desconto > 0 
+	and conta_receber.franqueada_id = $P{franqueada_id}
+	and turma.semestre_id = (select s1.id from semestre s1 where s1.data_inicio < 
+												(select s2.data_inicio from semestre s2 where s2.id = 
+												(select s3.id from semestre s3 where s3.data_inicio < 
+												(select s4.data_inicio from semestre s4 where s4.id = $P{semestre_id})
+												 order by s3.data_inicio desc limit 1))
+												 order by s1.data_inicio desc limit 1)]]>
+	</queryString>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="semestre"/>
+	</field>
+	<field name="percentual_desconto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="percentual_desconto"/>
+	</field>
+	<field name="qntdade_nao_bolsistas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="qntdade_nao_bolsistas"/>
+	</field>
+	<field name="qntdade_bolsistas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="qntdade_bolsistas"/>
+	</field>
+	<field name="qntdade_total" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="qntdade_total"/>
+	</field>
+	<title>
+		<band height="20">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="2" y="2" width="45" height="11" uuid="4dca54a7-90d4-4f86-b975-fd674e47898e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c09793d-f4d4-4c1a-a22c-ffa3f9ebb5eb"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Semestre:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="47" y="2" width="184" height="11" uuid="e95f9327-b7f4-44b7-a805-91fef899c0dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c09793d-f4d4-4c1a-a22c-ffa3f9ebb5eb"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="17">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="2" y="2" width="102" height="11" uuid="9e4699c6-d148-4625-b0c3-191baa3ab67a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c09793d-f4d4-4c1a-a22c-ffa3f9ebb5eb"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Percentual Desconto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="2" width="104" height="11" uuid="711843d0-2bac-4e88-ad8f-d3d32230b69d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="18eb4439-4574-4f9b-834f-9f99fd76c01f"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade Total (ambos)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="2" width="115" height="11" uuid="af55b0b5-0355-4ac5-b131-d7e0fd86afc3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d0ada7e8-1073-404e-8432-fb98dd2904ae"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade Alunos Bolsistas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="119" y="2" width="115" height="11" uuid="392b9cb4-062c-4dd7-b1c5-af9f58bc5df4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b6e41bd-6545-4326-91ff-b251e8aa3a9b"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Quantidade Alunos Regulares]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="349" y="2" width="104" height="11" uuid="434576a3-77be-42fc-9768-9932221eeba1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="18eb4439-4574-4f9b-834f-9f99fd76c01f"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qntdade_total}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="118" y="2" width="116" height="11" uuid="1f83af41-5e00-42f4-adb0-5e50efb0e6ed">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b6e41bd-6545-4326-91ff-b251e8aa3a9b"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qntdade_nao_bolsistas}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="234" y="2" width="115" height="11" uuid="36b4f48b-d257-48ea-970a-b9199c29c0ea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d0ada7e8-1073-404e-8432-fb98dd2904ae"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qntdade_bolsistas}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="2" y="2" width="102" height="11" uuid="96516ecc-a28a-458c-a3ab-0696f73569c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c09793d-f4d4-4c1a-a22c-ffa3f9ebb5eb"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{percentual_desconto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

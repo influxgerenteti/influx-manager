@@ -1,0 +1,100 @@
+{% extends "relatorios/pages.html" %}
+
+{% block page %}
+
+<style>
+    .page-breaker {
+        page-break-after: avoid;
+    }
+    .page {
+        page-break-after: always;
+    }
+    table {
+        margin-top: 20px;
+        border: solid var(--primary-color) 1px;
+    }
+</style>
+
+{% include 'relatorios/shared/data-header.html' with {'data' : data|length > 0, 'url' : url} %}
+
+{% if data|length > 0 %}
+
+    {% include 'relatorios/shared/table-style.html' %}
+
+    {% set remanescenteTotal = 0 %}
+    {% set liquidadoTotal = 0 %}
+    {% set valorTotal = 0 %}
+    {% set perPage = 10 %}
+    {% set pages = data|length / perPage %}
+    {% set pages = pages|round(0, 'ceil') %}
+    {% set pages = pages < 1 ? 1 : pages|number_format %}
+
+    {% for page in range(1, (pages)) %}
+    
+    <div class="page">
+        <h1 class="title">Relatório - Contas a Pagar - Agrupado por Categorias</h1>
+        {% set initialIndex = (perPage * (page - 1)) %}
+        {% for conta in data|slice(initialIndex, perPage) %}
+            {% set valorTotal = (valorTotal + conta.soma_total) %}
+            {% set liquidadoTotal = (liquidadoTotal + conta.soma_movimento) %}
+            {% set remanescente = (conta.soma_total - conta.soma_movimento) %}
+            {% set remanescenteTotal = (remanescenteTotal + remanescente) %}
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="2">{{conta.categoria}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="text-left">Valor Total R$:</th>
+                        <td class="text-right">{{ conta.soma_total|number_format(2, '.', ',') }}</td>
+                    </tr>
+                    <tr class="even">
+                        <th class="text-left">Valor Pago R$:</th>
+                        <td class="text-right">{{ conta.soma_movimento|number_format(2, '.', ',') }}</td>
+                    </tr>
+                    <tr>
+                        <th class="text-left">Valor Remanescente R$:</th>
+                        <th class="text-right">{{ remanescente|number_format(2, '.', ',') }}</th>
+                    </tr>
+                </tbody>
+            </table>
+            {% if loop.last %}
+                <div class="page-breaker"></div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% if loop.last %}
+    <div class="page">
+        <h1 class="title">Relatório - Contas a Pagar - Agrupado por Categorias</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="2">Totais</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th class="text-left">Valor Total R$:</th>
+                    <td class="text-right">{{ valorTotal|number_format(2, '.', ',') }}</td>
+                </tr>
+                <tr class="even">
+                    <th class="text-left">Total Liquidado R$:</th>
+                    <td class="text-right">{{ liquidadoTotal|number_format(2, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <th class="text-left">Total Remanescente R$:</th>
+                    <td class="text-right">{{ remanescenteTotal|number_format(2, '.', ',') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% endfor %}
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Inad_Valores_resumo" pageWidth="802" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="763e8c10-ec19-4486-a042-3c4bbea7103f">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select tr.aluno_id,
+		(select count(tr2.numero_parcela_documento)
+			from titulo_receber tr2
+			where DATE_FORMAT(tr2.data_prorrogacao, '%Y-%m-%d') < CURDATE() 
+			and tr2.aluno_id = tr.aluno_id 
+		)  as qtd_parcelas_pendentes,
+		(concat(format((select count(tr3.numero_parcela_documento) 
+										from titulo_receber tr3 
+									 where DATE_FORMAT(tr3.data_prorrogacao, '%Y-%m-%d') < CURDATE()
+										and tr3.franqueada_id = $P{franqueada_id})
+									 /
+							 		(select count(tr3.numero_parcela_documento) 
+							 			from titulo_receber tr3 
+							 		 where tr3.franqueada_id = $P{franqueada_id}
+							 		)*100,2,'de_DE') , "%") 
+		)  as relacao_inadimp
+from titulo_receber tr
+
+where DATE_FORMAT(tr.data_prorrogacao, '%Y-%m-%d') < CURDATE()
+	and tr.franqueada_id = $P{franqueada_id}
+group by aluno_id]]>
+	</queryString>
+	<field name="aluno_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="aluno_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="titulo_receber"/>
+	</field>
+	<field name="qtd_parcelas_pendentes" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="qtd_parcelas_pendentes"/>
+	</field>
+	<field name="relacao_inadimp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="relacao_inadimp"/>
+	</field>
+	<variable name="Tot_ParcelasPendentes" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtd_parcelas_pendentes}]]></variableExpression>
+	</variable>
+	<variable name="Tot_alunos" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{aluno_id}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="17">
+			<frame>
+				<reportElement x="0" y="0" width="802" height="17" uuid="ec186638-9a32-4e67-8791-29f63eab5966">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<staticText>
+					<reportElement x="54" y="2" width="70" height="13" uuid="97d2de70-a3cb-4766-ba87-f1034223ee00">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Comfortaa" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nº de Alunos:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="234" y="2" width="131" height="13" uuid="e6b5d639-8cc3-4bae-b886-378d4f1847ac">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Comfortaa" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Parcelas Pendentes:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="467" y="2" width="185" height="13" uuid="a714da0b-f701-4bee-91d8-1b1065182af5">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Comfortaa" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Percentual de Inadimplência:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="137" y="2" width="50" height="14" uuid="b0e6ac51-0611-4fde-bd57-d58a34b8d5ab">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a043ea03-dc31-4dd5-a931-4b3ae0ca7fea"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Comfortaa" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Tot_alunos}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="356" y="2" width="50" height="14" uuid="712022b7-f9f8-46cb-b495-a364f84f0d49">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a043ea03-dc31-4dd5-a931-4b3ae0ca7fea"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Comfortaa" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Tot_ParcelasPendentes}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="634" y="2" width="50" height="14" uuid="2c445082-8621-41a9-be26-ecb57c947d4a">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a043ea03-dc31-4dd5-a931-4b3ae0ca7fea"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Comfortaa" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{relacao_inadimp}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

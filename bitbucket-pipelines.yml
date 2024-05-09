@@ -1,0 +1,113 @@
+pipelines:
+  branches:
+    master:
+      - step:
+          image: node:16.16
+          deployment: production 
+          name: build-front-release
+          caches:
+            - node
+          script: 
+            - RELEASE_VERSION=$(echo "$BITBUCKET_BRANCH" | sed 's/master//' | tr '.' '-')
+            - echo "A branch atual é $RELEASE_VERSION"
+            - cd front
+            - ls
+            - npm uninstall -g @angular/cli
+            - npm cache verify
+            - rm package-lock.json
+            # - sed -i~ "s|VUE_APP_RELEASE_PATH.*=.*|VUE_APP_RELEASE_PATH=/|" .env
+            - sed -i~ "s|VUE_APP_HOST.*=.*|VUE_APP_HOST=https://api.manager.influx.com.br|" .env
+            # - sed -i~ "s|VUE_APP_VERSION.*=.*|VUE_APP_VERSION='production'|" .env
+            - cat .env
+            - npm install --save-dev -g @angular/cli@latest
+            - npm install
+            # - npm run test
+            - npm run build:prod
+            - cd ..
+            - mkdir artifact
+            - cp -r ./front/dist/* artifact/
+            - cp -r ./front/.env artifact/
+            - pipe: atlassian/aws-s3-deploy:1.5.0
+              variables:
+                  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                  S3_BUCKET: $S3_BUCKET
+                  LOCAL_PATH: artifact
+                  ACL: 'public-read'
+                  AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+          artifacts:
+            - artifact/**    
+    staging:
+      - step:
+          image: node:16.16
+          deployment: staging 
+          name: build-front-release
+          caches:
+            - node
+          script: 
+            - RELEASE_VERSION=$(echo "$BITBUCKET_BRANCH" | sed 's/staging//' | tr '.' '-')
+            - echo "A branch atual é $RELEASE_VERSION"
+            - cd front
+            - ls
+            - npm uninstall -g @angular/cli
+            - npm cache verify
+            - rm package-lock.json
+            # - sed -i~ "s|VUE_APP_RELEASE_PATH.*=.*|VUE_APP_RELEASE_PATH=/|" .env
+            - sed -i~ "s|VUE_APP_HOST.*=.*|VUE_APP_HOST=https://api-staging-manager.influx.com.br|" .env
+            - sed -i~ "s|VUE_APP_VERSION.*=.*|VUE_APP_VERSION='staging'|" .env
+            - cat .env
+            - npm install --save-dev -g @angular/cli@latest
+            - npm install
+            # - npm run test
+            - npm run build:beta
+            - cd ..
+            - mkdir artifact
+            - cp -r ./front/dist/* artifact/
+            - cp -r ./front/.env artifact/
+            - pipe: atlassian/aws-s3-deploy:1.5.0
+              variables:
+                  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                  S3_BUCKET: $S3_BUCKET
+                  LOCAL_PATH: artifact
+                  ACL: 'public-read'
+                  AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+          artifacts:
+            - artifact/**    
+    releasing:
+      - step:
+          image: node:16.16
+          deployment: releasing 
+          name: build-front-release
+          caches:
+            - node
+          script: 
+            - RELEASE_VERSION=$(echo "$BITBUCKET_BRANCH" | sed 's/releasing//' | tr '.' '-')
+            - echo "A branch atual é $RELEASE_VERSION"
+            - cd front
+            - ls
+            - npm uninstall -g @angular/cli
+            - npm cache verify
+            - rm package-lock.json
+            # - sed -i~ "s|VUE_APP_RELEASE_PATH.*=.*|VUE_APP_RELEASE_PATH=/|" .env
+            - sed -i~ "s|VUE_APP_HOST.*=.*|VUE_APP_HOST=https://api-releasing-manager.influx.com.br|" .env
+            - sed -i~ "s|VUE_APP_VERSION.*=.*|VUE_APP_VERSION='releasing'|" .env
+            - cat .env
+            - npm install --save-dev -g @angular/cli@latest
+            - npm install
+            # - npm run test
+            - npm run build:beta
+            - cd ..
+            - mkdir artifact
+            - cp -r ./front/dist/* artifact/
+            - cp -r ./front/.env artifact/
+            - pipe: atlassian/aws-s3-deploy:1.5.0
+              variables:
+                  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                  S3_BUCKET: $S3_BUCKET
+                  LOCAL_PATH: artifact
+                  ACL: 'public-read'
+                  AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+          artifacts:
+            - artifact/**                

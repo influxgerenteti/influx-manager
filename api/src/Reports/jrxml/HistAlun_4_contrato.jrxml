@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistAlun_4_contrato" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="840" leftMargin="2" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b470ccc8-f23b-4494-9d23-c393da345e88">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="aluno_id" class="java.lang.String"/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+	concat(aluno_id,'/',contrato.id) as numero,
+	date_format(data_inicio_contrato,'%d/%m/%Y') as data_inicio_contrato,
+	date_format(data_termino_contrato,'%d/%m/%Y') as data_termino_contrato,
+	pessoa.nome_contato as contratante
+from contrato 
+inner join pessoa
+	on contrato.responsavel_financeiro_pessoa_id = pessoa.id
+
+where franqueada_id = $P{franqueada_id}
+	and aluno_id = $P{aluno_id}]]>
+	</queryString>
+	<field name="numero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="numero"/>
+	</field>
+	<field name="data_inicio_contrato" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="data_inicio_contrato"/>
+	</field>
+	<field name="data_termino_contrato" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="data_termino_contrato"/>
+	</field>
+	<field name="contratante" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="contratante"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="13" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="0" width="90" height="13" uuid="af1aa8cd-4caf-4df3-bbef-d330b6d9e6b1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1054026a-ac4b-446b-82e9-e43969ee2432"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="80" height="13" uuid="4ac21afe-9c0f-4aae-9622-1567fbb24d91">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contratante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="164" y="0" width="90" height="13" uuid="4267d41c-bfee-433a-96be-0a7bda693545">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c2ceb8c-1aa4-4cfb-8f51-00352a108ef7"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Início]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="323" y="0" width="103" height="13" uuid="80ba80cd-66f5-4c1f-abe6-88f0bf52652d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c18ca5ad-4a5a-4ef5-a027-1a227c48083b"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Término]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="470" y="0" width="330" height="14" uuid="efa193c8-1104-40cf-b91e-4087521c34e6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contratante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="0" width="103" height="14" uuid="ef05db09-a1f4-4c15-a34f-9836e559c1a2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_termino_contrato}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="0" width="90" height="14" uuid="522f27d6-768d-40b1-bf51-a17adb189855">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_inicio_contrato}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="90" height="14" uuid="4b9a3a84-9d26-4265-b18e-9ceaa3c66996">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

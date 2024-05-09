@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Inad_Valores_parcelas" pageWidth="802" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f197ebc3-d7ea-4f7c-8f82-0281ae35c7a7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select
+	tr.observacao,
+	count(tr.observacao) as qtd_parcelas_atrasadas,
+	sum(tr.valor_original) as total_valor_atrasado
+	
+from titulo_receber tr
+
+where DATE_FORMAT(tr.data_prorrogacao, '%Y-%m-%d') < CURDATE()
+  and tr.franqueada_id = $P{franqueada_id}
+group by tr.observacao]]>
+	</queryString>
+	<field name="observacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="observacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="titulo_receber"/>
+	</field>
+	<field name="qtd_parcelas_atrasadas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="qtd_parcelas_atrasadas"/>
+	</field>
+	<field name="total_valor_atrasado" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="total_valor_atrasado"/>
+	</field>
+	<variable name="Tot_ParcelasAtrasadas" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{qtd_parcelas_atrasadas}]]></variableExpression>
+	</variable>
+	<variable name="Tot_ValorAtrasado" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_valor_atrasado}]]></variableExpression>
+	</variable>
+	<pageHeader>
+		<band height="17"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<staticText>
+				<reportElement x="69" y="0" width="80" height="13" uuid="11f332d7-3416-4a10-a269-2f8d632bd0ab">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Comfortaa" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="109" height="13" uuid="03f3f5a6-f8fb-406c-9fca-75c699ea125a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parcelas Atrasadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="590" y="0" width="124" height="13" uuid="5b92d265-70f6-48e6-8de6-89dbf10326a5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Atrasado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="70" y="0" width="270" height="14" uuid="19fa90e2-f50d-4651-9a3a-3885f65e807b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a043ea03-dc31-4dd5-a931-4b3ae0ca7fea"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#" isBlankWhenNull="true">
+				<reportElement x="590" y="0" width="124" height="14" uuid="029d6863-06e4-43ff-8e35-e9c29b56025f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a043ea03-dc31-4dd5-a931-4b3ae0ca7fea"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_valor_atrasado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="350" y="0" width="109" height="14" uuid="400cc218-d8f4-43c1-acc9-79499d8a9f06">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a043ea03-dc31-4dd5-a931-4b3ae0ca7fea"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qtd_parcelas_atrasadas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="25">
+			<staticText>
+				<reportElement x="308" y="2" width="40" height="14" uuid="5d0f06a6-3e5d-4952-8bb5-19a19f785001"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Comfortaa" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Totais:]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="351" y="2" width="364" height="14" uuid="ebf44fd6-29dd-49cc-abb7-f05c0e5dccc2"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textField pattern="#,##0.00#" isBlankWhenNull="true">
+					<reportElement x="239" y="0" width="125" height="14" uuid="d1937a25-9878-42fa-adea-15e7670fb7fd">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Comfortaa"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Tot_ValorAtrasado}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="0" y="0" width="109" height="14" uuid="d501ef6b-d475-4cd8-8b44-1e230eb8a500">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Comfortaa"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Tot_ParcelasAtrasadas}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</summary>
+</jasperReport>

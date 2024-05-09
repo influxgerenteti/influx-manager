@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    :root {
+      --primary-color: #001f76;
+      --secondary-color: #c1d000;
+      --even-color: #e0e0e0;
+    }
+
+    body {
+      margin: 0px;
+      font-size: 0.6em;
+      font-family: monospace;
+      padding-bottom: 2cm;
+      background-color: darkslategray;
+    }
+
+    h2 {
+      font-size: 0.9em;
+    }
+
+    page {
+      display: block;
+      margin: 0 auto;
+      width: 21cm;
+      height: 29.7cm;
+    }
+
+    .page {
+      background-color: white !important;
+      padding: 0.5cm;
+      margin-top: 2cm;
+      width: 20cm;
+      height: 28.7cm;
+      box-shadow: 0px 0px 15px -5px #00000055;
+    }
+
+    page[size="A4"] {
+      width: 21cm;
+      height: 29.7cm;
+    }
+
+    page[size="A4"][layout="portrait"] {
+      width: 29.7cm;
+      height: 21.0cm;
+    }
+
+    .pages-footer {
+      height: 2cm;
+    }
+
+    @media print {
+      .pagebreak {
+        page-break-before: always;
+      }
+
+      body {
+        background-color: white;
+      }
+
+      .decorate {
+        background: none;
+      }
+
+      .page {
+        padding-left: 0.8cm;
+        padding-top: 0.8cm;
+        margin: 0;
+        width: 21cm;
+        height: 30.2cm;
+        ;
+        background-color: none;
+        box-shadow: none;
+      }
+
+      .pages-footer {
+        display: none;
+        height: 0cm;
+      }
+
+      body,
+      page {
+        padding: 0;
+        margin: 0;
+        box-shadow: 0;
+      }
+
+      page {
+        z-index: 10;
+      }
+
+      page[size="A4"] {
+        width: 21cm;
+        height: 29.7cm;
+      }
+
+      page[size="A4"][layout="portrait"] {
+        width: 29.7cm;
+        height: 21cm;
+      }
+    }
+
+    .header {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <page size="A4">
+    {% block page %} content {% endblock %}
+  </page>
+
+</body>
+
+</html>

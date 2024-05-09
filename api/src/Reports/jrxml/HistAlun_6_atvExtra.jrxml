@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistAlun_5_atvExtra" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="840" leftMargin="2" rightMargin="0" topMargin="0" bottomMargin="0" uuid="758b1bea-fb24-4fd8-8771-2cbf13155cad">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<parameter name="aluno_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+	date_format(atividade_extra.data_hora_inicio,  "%d/%m/%Y") as data,
+	date_format(atividade_extra.data_hora_inicio,  "%h:%i") as inicio,
+	date_format(atividade_extra.data_hora_fim,     "%h:%i") as fim,
+	pessoa.nome_contato as funcionario,
+	atividade_extra.descricao_atividade as tipo_atividade,
+	case aluno_atividade_extra.presenca 
+		when 'P' then
+			"Presente"
+		when 'F' then
+			"Faltante"
+		else
+			"Reposição"
+	end	as presenca
+
+from aluno_atividade_extra
+inner join atividade_extra
+	on aluno_atividade_extra.atividade_extra_id = atividade_extra.id
+inner join atividade_extra_funcionario
+	on aluno_atividade_extra.atividade_extra_id = atividade_extra_funcionario.atividade_extra_id
+inner join funcionario
+	on atividade_extra_funcionario.funcionario_id = funcionario.id
+inner join pessoa
+	on funcionario.pessoa_id = pessoa.id
+
+where atividade_extra.franqueada_id = $P{franqueada_id}  
+	and aluno_atividade_extra.aluno_id = $P{aluno_id}]]>
+	</queryString>
+	<field name="data" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="data"/>
+	</field>
+	<field name="inicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="inicio"/>
+	</field>
+	<field name="fim" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="fim"/>
+	</field>
+	<field name="funcionario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="funcionario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<field name="tipo_atividade" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_atividade"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="atividade_extra"/>
+	</field>
+	<field name="presenca" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="presenca"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="aluno_atividade_extra"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="13" uuid="86e16dd4-992c-4129-8611-85420fd9f2d2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1054026a-ac4b-446b-82e9-e43969ee2432"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="50" height="13" uuid="79a56a16-5ca2-43af-bee3-c1d4707ed26e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c2ceb8c-1aa4-4cfb-8f51-00352a108ef7"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Início]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="0" width="50" height="13" uuid="2a8525c1-589c-4f63-bce1-b917930ace4f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c18ca5ad-4a5a-4ef5-a027-1a227c48083b"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fim]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="0" width="80" height="13" uuid="0f66f45a-f7dc-482e-af62-a6b0d9aa373d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Funcionário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="0" width="80" height="13" uuid="ee0a4d22-935d-4333-a7fe-98b763fcbe2a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Atividade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="0" width="60" height="13" uuid="c63d45a6-2e92-46ba-8a34-1045ffa162b6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presença]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="148" y="0" width="50" height="14" uuid="0c4fdf23-8de3-4d59-964d-1361acd4f25a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fim}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="70" height="14" uuid="5e484fc0-5982-4569-829f-b457de299c10">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="0" width="140" height="14" uuid="65109e87-8f04-42dd-92f2-76952577c783">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcionario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="0" width="50" height="14" uuid="f44a597c-3998-44db-bc59-0f17f0a90a43">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="381" y="0" width="80" height="14" uuid="21a02d50-1b4f-403d-bdb7-c7eef4539320">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_atividade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="0" width="53" height="14" uuid="d8db1400-a166-4f38-976a-ae7bdd7324c8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{presenca}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,30 @@
+.row.row-equal {
+  padding-right: ($grid-gutter-width / 4);
+  padding-left:  ($grid-gutter-width / 4);
+  margin-right: ($grid-gutter-width / -2);
+  margin-left:  ($grid-gutter-width / -2);
+
+  [class*="col-"] {
+    padding-right: ($grid-gutter-width / 4);
+    padding-left:  ($grid-gutter-width / 4);
+  }
+}
+
+.main .container-fluid{
+  margin-top: 1rem;
+  // margin-top: 5%;
+  // margin-top: 55px;
+  // padding: 0 15px;
+}
+
+@media(max-width:900px){
+  .main .container-fluid{
+    margin-top:10%; 
+  }  
+}
+
+@media(max-width:400px){
+  .main .container-fluid{
+    margin-top:14%; 
+  }  
+}

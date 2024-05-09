@@ -1,0 +1,26 @@
+[
+    {
+        "url": "https://beta.manager.influx.com.br/release/23-12-1-1/", 
+        "notes": "https://s3.sa-east-1.amazonaws.com/beta.manager.influx.com.br/versions/V-23.12.1.1.md", 
+        "data": "18/12/2023 - 14:13", 
+        "nome": "V-23.12.1.1"
+    }, 
+    {
+        "url": "https://beta.manager.influx.com.br/release/23-12-1-2/", 
+        "notes": "https://s3.sa-east-1.amazonaws.com/beta.manager.influx.com.br/versions/V-23.12.1.2.md", 
+        "data": "18/12/2023 - 14:13", 
+        "nome": "V-23.12.1.2"
+    }, 
+    {
+        "url": "https://beta.manager.influx.com.br/release/23-12-4-1/", 
+        "notes": "https://s3.sa-east-1.amazonaws.com/beta.manager.influx.com.br/versions/V-23.12.4.1.md", 
+        "data": "08/01/2024 - 16:35", 
+        "nome": "V-23.12.4.1"
+    }, 
+    {
+        "url": "https://beta.manager.influx.com.br/release/24-1-2-1/", 
+        "notes": "https://s3.sa-east-1.amazonaws.com/beta.manager.influx.com.br/versions/V-24.1.2.1.md", 
+        "data": "08/01/2024 - 16:13", 
+        "nome": "V-24.1.2.1"
+    }
+]

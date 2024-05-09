@@ -1,0 +1,95 @@
+/* Diminuir tabela */
+.table-sm tr {
+  align-items: center;
+}
+
+.table thead {
+  z-index: 2;
+  background-color: white;
+}
+
+.table-sm thead tr {
+  border-bottom: 2px solid #EBECF0;
+}
+.table-sm tbody tr {
+  height: 34px;
+  border-top: 1px solid #EBECF0;
+}
+
+.table-sm thead th,
+.table-sm tbody td {
+  border-width: 0;
+  padding: 0.2rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .table-sm td {
+    padding-right: 0.5rem;
+  }
+}
+
+.table-sm .coluna-icones .icone-link {
+  min-width: 12px;
+  text-align: center;
+}
+
+@media (min-width: 769px) {
+  .table-sm .coluna-icones {
+    min-width: 80px;
+    max-width: 120px;
+  }
+
+  .table-sm .coluna-icones .icone-link {
+    width: 12px;
+    text-align: center;
+  }
+
+  .table-sm .coluna-checkbox {
+    max-width: 22px;
+  }
+
+  .table-sm .coluna-numero-parcela {
+    max-width: 45px;
+    text-align: center;
+  }
+
+  .table-sm .coluna-situacao {
+    max-width: 30px;
+  }
+
+  .table-sm .coluna-situacao-icone {
+    max-width: 90px;
+  }
+
+  .table-sm .coluna-numero,
+  .table-sm .coluna-valor,
+  .table-sm .coluna-data {
+    max-width: 100px;
+  }
+
+  .table-sm .coluna-operadora-cartao {
+    max-width: 100px;
+  }
+
+  .table-sm .coluna-tipo-operacao {
+    max-width: 55px;
+  }
+  .table-sm .coluna-titulo {
+    max-width: 75px;
+  }
+
+  .table-sm .estornado {
+    color: red;
+  }
+
+
+  .table-sm .coluna-tipo-operacao .badge {
+    min-width: 40px;
+  }
+}
+
+.coluna-checkbox .custom-control.custom-checkbox {
+  height: auto;
+}

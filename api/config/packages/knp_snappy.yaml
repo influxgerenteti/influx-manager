@@ -1,0 +1,17 @@
+knp_snappy:
+    pdf:
+        enabled:    true
+        #binary:     '%env(WKHTMLTOPDF_PATH)%'
+        binary: xvfb-run --auto-servernum --server-num=1 wkhtmltopdf
+        #! Na produção está rodando com o xvfb-run e no desenv como '%env...
+        options:
+            no-outline: true
+            page-size: A4
+            encoding: UTF-8
+            margin-top: 10mm
+            margin-bottom: 10mm
+    image:
+        enabled:    true
+        #binary:     '%env(WKHTMLTOPDF_PATH)%'
+        binary: xvfb-run --auto-servernum --server-num=1 wkhtmltopdf
+        options:    []

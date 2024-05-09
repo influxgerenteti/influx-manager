@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HistAlun_7_followup" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="840" leftMargin="2" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4236aacc-cb0a-44ee-892b-17cdc499b1c2">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<parameter name="aluno_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select
+		date_format(followup_comercial.data_registro,'%d/%m/%Y') as data,
+		pessoa.nome_contato as funcionario,
+		'' as agendamento,
+		followup_comercial.followup as assunto,
+		'' as resolvido
+		
+from followup_comercial
+inner join interessado
+	on followup_comercial.interessado_id = interessado.id
+inner join funcionario
+	on followup_comercial.consultor_funcionario_id = funcionario.id
+left join pessoa
+	on funcionario.pessoa_id = pessoa.id	
+
+where interessado.franqueada_id = $P{franqueada_id}
+and interessado.aluno_id = $P{aluno_id}]]>
+	</queryString>
+	<field name="data" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="data"/>
+	</field>
+	<field name="funcionario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="funcionario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<field name="agendamento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="agendamento"/>
+	</field>
+	<field name="assunto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="assunto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="followup_comercial"/>
+	</field>
+	<field name="resolvido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="resolvido"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="549" y="0" width="69" height="13" uuid="b8246387-f1ca-44eb-81f7-7bd37ce1ab31">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resolvido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="222" y="0" width="80" height="13" uuid="de25032b-6e27-45d0-99ac-f876f3780f32">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c18ca5ad-4a5a-4ef5-a027-1a227c48083b"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Agendamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="0" width="70" height="13" uuid="ce6319cb-69e7-4a1d-a744-f6afd311e227">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6c2ceb8c-1aa4-4cfb-8f51-00352a108ef7"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Funcionário]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="13" uuid="68e8b7c8-a1f5-4f9f-a2ed-52d845632fa4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1054026a-ac4b-446b-82e9-e43969ee2432"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="0" width="70" height="13" uuid="931f2e52-aa46-4c0b-a675-2b7cbb68d64c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assunto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="50" height="14" uuid="6f619d01-341c-43c3-bc48-83c930a7965f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="90" y="0" width="120" height="14" uuid="a4dff31d-11a2-455c-b9f5-5b26fe6d5d65">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcionario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="222" y="0" width="80" height="14" uuid="7e0e392a-661f-4ca3-b776-514efd0a34d8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agendamento}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="322" y="0" width="218" height="14" uuid="5ab80707-b5fa-43c0-a662-d3ad0cb4a855">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{assunto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="548" y="1" width="70" height="14" uuid="83595f58-c2ae-4187-88a1-146f0a902dfc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33bd598f-2afb-4ad9-968c-40656f328658"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resolvido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

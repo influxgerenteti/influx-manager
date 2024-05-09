@@ -1,0 +1,20 @@
+01 a 02 Alunos;TUR;1;2;M;vlHoraLinhas0102M
+03 a 05 Alunos;TUR;3;5;M;vlHoraLinhas0305M
+06 a 07 Alunos;TUR;6;7;M;vlHoraLinhas0607M
+08 Alunos;TUR;8;8;M;vlHoraLinhas08M
+09 Alunos;TUR;9;9;M;vlHoraLinhas09M
+01 a 02 Alunos;TUR;1;2;H;vlHoraLinhas0102H
+03 a 05 Alunos;TUR;3;5;H;vlHoraLinhas0305H
+06 a 07 Alunos;TUR;6;7;H;vlHoraLinhas0607H
+08 Alunos;TUR;8;8;H;vlHoraLinhas08H
+09 Alunos;TUR;9;9;H;vlHoraLinhas09H
+Personal;PER;1;3;M;vlHoraLinhasPersonalM
+Personal;PER;1;3;H;vlHoraLinhasPersonalH
+VIP;VIP;1;1;H;vlHoraLinhas01VIPH
+VIP;VIP;1;1;M;vlHoraLinhas01VIPM
+Bonus Class;BON;1;999;H;vlHoraLinhasBONH
+Bonus Class;BON;1;999;M;vlHoraLinhasBONM
+Atividade Extra;ATI;1;999;H;vlHoraLinhas01ATIH
+Atividade Extra;ATI;1;999;M;vlHoraLinhas01ATIM
+Reposição de Aula;REP;1;999;H;vlHoraLinhas01REPH
+Reposição de Aula;REP;1;999;M;vlHoraLinhas01REPM

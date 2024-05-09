@@ -1,0 +1,51 @@
+{% extends "relatorios/pages.html" %}
+
+{% block page %}
+
+<style>
+    .page-breaker {
+        page-break-after: avoid;
+    }
+    .page {
+        page-break-after: always;
+    }
+    table {
+        margin-top: 20px;
+        border: solid var(--primary-color) 1px;
+    }
+</style>
+
+{% include 'relatorios/shared/data-header.html' with {'data' : data|length > 0, 'url' : url} %}
+
+{% if data|length > 0 %}
+
+    {% include 'relatorios/shared/table-style.html' %}
+
+    <div class="page">
+        <h1 class="title">Relatório - Contas a Pagar - Agrupado por Situação</h1>
+        {% for conta in data %}
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="2">{{ conta.situacao_nome }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="text-left">Valor Total R$: </th>
+                        <td class="text-right">{{ conta.soma_total|number_format(2, ',', '.') }}</td>
+                    </tr>
+                    {% if conta.soma_movimento %}
+                    <tr class="even">
+                        <th class="text-left">Valor Movimentado R$: </th>
+                        <td class="text-right">{{ conta.soma_movimento|number_format(2, ',', '.') }}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        {% endfor %}
+    </div>
+
+{% endif %}
+
+{% endblock %}

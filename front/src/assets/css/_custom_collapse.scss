@@ -1,0 +1,33 @@
+.custom-collapse {
+    margin: 0 -16px;
+
+    .custom-collapse--collapsible {
+        position: relative;
+        background: #ebecf0;
+        padding: 16px;
+    }
+
+    .custom-collapse--icon-wrapper {
+        position: absolute;
+        top: -1px;
+        width: 34px;
+        height: 17px;
+        overflow: hidden;
+    }
+
+    .custom-collapse--icon {
+        position: relative;
+        top: 10px;
+        left: 5px;
+        width: 24px;
+        height: 24px;
+        background: #fff;
+        transform: rotate(45deg);
+    }
+
+    .custom-collapse--component {
+        padding: 10px;
+        background: #fff;
+        box-shadow: 0 3px 14px #ccc;
+    }
+}

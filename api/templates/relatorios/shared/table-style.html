@@ -1,0 +1,55 @@
+<style>
+
+    @media print {
+        tbody>tr:hover {
+            background-color: white !important;
+        }
+        tbody>tr.even:hover {
+            background-color: var(--even-color) !important;
+        }
+    }
+    .title {
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-right {
+        text-align: right;
+        padding-right: 10px;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .obs {
+        padding-right: 5mm;
+        max-width: 4cm;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    tbody>tr:hover, tbody>tr.even:hover {
+        background-color: var(--secondary-color);
+    }
+
+    tbody>tr.even {
+        background-color: var(--even-color);
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 0.56rem;
+    }
+
+    thead,
+    tfoot {
+        font-size: 0.7rem;
+    }
+</style>

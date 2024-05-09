@@ -1,0 +1,332 @@
+{% extends "relatorios/pages.html" %}
+
+ 
+{% block page %}
+<style>
+       
+    body{
+        
+        font-size: 0.8em;
+    }
+
+    .titulo-empresa {
+        position: absolute; 
+        padding-top: 1px;
+        padding-left: 0;
+    }
+    
+    .nome-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 0cm;
+        text-align: left;
+        width: 350px;
+    }
+    
+    .idade-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 10cm;
+        text-align: left;
+        width: 153px;
+    }
+
+    .end-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 0cm;
+        text-align: left;
+        width: 350px;
+    }
+
+    .bairro-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 8cm;
+        text-align: left;
+        width: 253px;
+    }
+    .cidade-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 14cm;
+        text-align: left;
+        width: 253px;
+    }
+
+    .cep-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 0cm;
+        text-align: left;
+        width: 100px;
+    }
+    .fone-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 4cm;
+        text-align: left;
+        width: 270px;
+    }  	
+    .rg-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 8cm;
+        text-align: left;
+        width: 230px;
+    }
+    .cpf-aluno {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 14cm;
+        text-align: left;
+        width: 250px;
+    }
+    .responsavel {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 0cm;
+        text-align: left;
+        width: 350px;
+    }
+    .parentesco-responsavel {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 14cm;
+        text-align: left;
+        width: 250px;
+    }
+ 
+    .cpf-responsavel {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 0cm;
+        text-align: left;
+        width: 250px;
+    }
+    .fone-responsavel {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 4cm;
+        text-align: left;
+        width: 250px;
+    }
+    .celular-responsavel {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 9cm;
+        text-align: left;
+        width: 250px;
+    }
+    .fone-comercial-responsavel {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 14cm;
+        text-align: left;
+        width: 250px;
+    }
+ 
+    .celular-responsavel {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 9cm;
+        text-align: left;
+        width: 250px;
+    }
+    .celular-responsavel {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 9cm;
+        text-align: left;
+        width: 250px;
+    }
+ 
+    .valor-total {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 0cm;
+        text-align: left;
+        width: 250px;
+    }
+    .inadimplente {
+        position: absolute; 
+        padding-top: 1px; 
+        padding-left: 14cm;
+        text-align: left;
+        width: 250px;
+    }
+ 
+    .nomeFranqueada{
+        display: flex;
+        margin-bottom: 25px;
+        font-size: 0.8rem;
+        color: darkgrey;
+    }
+    
+    .txtAlunosInadimplentes{
+        margin-right: 0px;
+        font-size: 1rem;
+    }
+    
+    .imagem-logo {
+        width: 100px;
+    }
+
+    .cabecalho {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .dados {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: center;
+    }
+    .text-influx-manager {
+        position: absolute; 
+        padding-top: 3cm; 
+        padding-left: 0cm;
+        text-align: left;
+        width: 250px;
+        color: darkgrey;
+        font-size: 0.8rem;
+    }
+    .text-paginacao {
+        position: absolute; 
+        padding-top: 3cm; 
+        padding-left: 9cm;
+        text-align: left;
+        width: 250px;
+        color: darkgrey;
+        font-size: 0.8rem;
+    }
+    .text-paginacao2 {
+        position: absolute; 
+        padding-top: 3cm; 
+        padding-left: 11cm;
+        text-align: left;
+        width: 250px;
+        color: darkgrey;
+        font-size: 0.8rem;
+    }
+    .text-data-hoje {
+        position: absolute; 
+        padding-top: 3cm; 
+        padding-left: 16.5cm;
+        text-align: left;
+        width: 250px;
+        color: darkgrey;
+        font-size: 0.8rem;
+    }
+    .empty{
+            grid-area: cabecalho;
+            background-color: #1867c0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 10px;
+            z-index: 1;
+            box-shadow: 0px 4px 9px -2px rgba(0,0,0,0.75);
+            font-weight: 300;
+            font-size: 2rem;
+        }
+    .rodape{
+        position: relative;
+        height: 0.53cm;
+    }
+    .area_itens{
+                height: 23cm;
+                position: static;
+                left: 1cm;
+                top: 5.8cm;
+            }
+    fieldset {
+        border: none;
+        display: flex;
+        margin-bottom: 15px;
+    }
+    
+</style>
+    <div>
+        {% if alunos.data != null %} 
+            {% set paginacao = alunos.data|length %}
+            {% for index,aluno in alunos.data %}
+            {% block aluno %}
+                {% if index is divisible by(5)  %}
+                    <div class="page decorate">
+                        <div class="cabecalho">
+                            <div class="area-left">
+                                <span class="nomeFranqueada">{{alunos.nomeFranqueada}}</span>
+                                <span class="txtAlunosInadimplentes">ALUNOS INADIMPLENTES</span>
+                            </div>
+                            <div class="area-right">
+                                <img class="imagem-logo" src="{{ absolute_url(asset("/templates/relatorios/influx_logo.png")) }}" alt="Teste"/>
+                            </div>
+                            
+                        </div>
+                        <div class="area_itens">
+                {% endif %}  
+                            <hr>
+                            <body>
+                                <div class="dados">
+                                    <fieldset>
+                                        <span class="nome-aluno"> <b>Aluno: </b>{{aluno.nome_contato}}</span> 
+                                        <span class="idade-aluno"><b>Idade: </b>{{aluno.idade}}</span>
+                                    </fieldset>
+                                    <fieldset>
+                                        <span class="end-aluno"><b>Endereco: </b>{{aluno.endereco}}</span>
+                                        <span class="bairro-aluno"><b>Bairro:      </b>{{aluno.bairro}}</span>
+                                        <span class="cidade-aluno"><b>Cidade:      </b>{{aluno.cidade}}</span>
+                                    </fieldset>
+                                    <fieldset>
+                                        <span class="cep-aluno"><b>CEP:  </b>{{aluno.cep}}</span>
+                                        <span class="fone-aluno"><b>Fone: </b>{{aluno.fone}}</span>
+                                        <span class="rg-aluno"><b>RG:   </b>{{aluno.rg}}</span>
+                                        <span class="cpf-aluno"><b>CPF:  </b>{{aluno.cnpj_cpf}}</span>
+                                    </fieldset>  
+                                    
+                                    <fieldset>
+                                        <span class="responsavel"><b>Responsavel: </b>{{aluno.nome_responsavel}}</span>
+                                        <span class="parentesco-responsavel"><b>Relacionamento: </b>{{aluno.parentesco_responsavel}}</span>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <span class="cpf-responsavel"><b>CPF: </b>{{aluno.cpf_responsavel}}</span>
+                                        <span class="fone-responsavel"><b>Fone: </b>{{aluno.fone_responsavel}}</span>
+                                        <span class="celular-responsavel"><b>Celular: </b>{{aluno.celular_responsavel}}</span>
+                                        <span class="fone-comercial-responsavel"><b>Fone Comercial: </b>{{aluno.fone_comercial_responsavel}}</span>
+                                    </fieldset>   
+                                    <fieldset>
+                                        <span class="valor-total"><b>Total Vencido: </b>{{aluno.total_vencido}}</span>
+                                        <span class="inadimplente"><b>Inadimplente: </b>{{aluno.inadimplente_desde |date("d/m/Y")}}</span>
+                                    </fieldset>   
+                                    <br>
+                                </div>
+                            </body> 
+                {% if (index +1) is divisible by(5) or (loop.last) %}
+                        </div>
+                        <div class="rodape">
+                            <span class="text-influx-manager">Influx Manager</span>
+                            <span class="text-paginacao">{{((index +1)/5)|round(0, 'ceil')}}  de  {{(paginacao / 5)|round(0, 'ceil')}}</span>
+                            <span class="text-data-hoje">{{ "now"|date("m/d/Y H:i") }}</span>
+                        </div>  
+                    </div>               
+                    
+                {% endif %} 
+                
+                
+            {% endblock %}                
+            {% endfor %}
+            </div>
+            <div class="pages-footer"></div>             
+        {% else %} 
+            <div >
+                <span class ="empty">Sem dados</span>
+            </div> 
+        {% endif %}  
+    
+{% endblock %}

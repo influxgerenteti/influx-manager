@@ -1,0 +1,66 @@
+<style>
+    header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        background-color: var(--secondary-color);
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        gap: 20px;
+        padding: 5px 0;
+    }
+
+    header>button,
+    header>a {
+        border: none;
+        background-color: var(--primary-color);
+        color: white;
+        font-size: 1rem;
+        display: block;
+        text-decoration: none;
+        padding: 5px 20px;
+        cursor: pointer;
+        font-family: monospace;
+    }
+
+    header>button:hover,
+    header>a:hover {
+        background-color: #0a56ab;
+        box-shadow: rgba(255, 255, 255, 0.25) 0px 0px 5px 3px;
+    }
+
+    .empty {
+        grid-area: cabecalho;
+        background-color: #1867c0;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10px;
+        z-index: 1;
+        box-shadow: 0px 4px 9px -2px rgba(0, 0, 0, 0.75);
+        font-weight: 300;
+        font-size: 2rem;
+        padding: 10px;
+    }
+
+    @media print {
+        header {
+            display: none;
+        }
+    }
+</style>
+
+<header>
+    {% if data %}
+    <button onclick="print()">Imprimir</button>
+    <a href="{{ url }}">Exportar Excel</a>
+    {% else %}
+    <h2 class="empty">
+        Nenhuma Informação
+    </h2>
+    {% endif %}
+</header>

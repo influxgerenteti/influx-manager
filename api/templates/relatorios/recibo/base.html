@@ -1,0 +1,269 @@
+{% extends "relatorios/pages.html" %}
+
+ 
+{% block page %}
+<style>
+       
+    body{
+        
+        font-size: 0.7em;
+    }
+    
+    
+
+    .imagem-logo {
+        width: 80px;
+    }
+    
+    .titulo-empresa {
+        position: absolute; 
+        padding-top: 10px;
+        padding-left: 0.6cm;
+    }
+    
+    .numero-recibo {
+        position: absolute; 
+        padding-top: 10px; 
+        padding-left: 13.5cm;
+        text-align: right;
+        width: 153px;
+    }
+    
+    .data-impressao {
+        position: absolute; 
+        padding-top: 29px;
+        padding-left: 16cm;       		
+    }
+    
+    .endereco-empresa {
+        position: absolute; 
+        padding-top: 50px; 
+        word-wrap: break-word; 
+        width: 550px;
+        padding-left: 0.6cm;
+    }
+    
+    .data-impressao-completo {
+        width: 100%;
+        text-align: right;
+    }
+    
+    .texto-tabela-esquerda {
+        text-align: left;
+    }        	
+    
+    .texto-recebi-empresa {
+        padding-left: 100px;
+    }
+    
+    .texto-recebi-importancia {
+        padding-left: 50px;
+    }
+    
+    .texto-referente-a {    
+        padding-left: 0cm;
+    }
+    .texto-referente-a-conteudo {
+        padding-left: 2cm;
+    }
+    
+    .texto-tabela-esquerda.quebra-linha-tabela {
+        width: 1240px;
+        word-wrap: break-word;
+    }
+    
+    .in-recibo {
+        padding: 25px 0;
+    }
+    .in-recibo:nth-child(n+2) {
+        border-top: 2px dashed #000;
+    }
+    
+    .recibo-assinatura {
+        display: flex;
+    }
+    .recibo-assinatura b {
+        margin-right: 30px
+    }
+    .recibo-assinatura label:last-child {
+        display: block;
+    }
+</style>
+<div>
+        {% for recibo in recibos %}
+        {% block recibo %}
+        <div class="page decorate">
+            {% set nItens = recibo.itens|length%}
+           <div class="in-recibo">
+                <div>
+                    {% block logoInflux %}
+                        <img class="imagem-logo" src="{{ absolute_url(asset("/templates/relatorios/influx_logo.png")) }}" alt="Teste"/>
+                    {% endblock %}    		
+                    <span>
+                        <b class="titulo-empresa">
+                            {% block nomeFranqueada %}inFlux Champagnat{% endblock %}
+                         </b>
+                         <b class="numero-recibo">
+                            Recibo Nº {% block reciboNumero %}1{% endblock %}
+                         </b>
+                         <b class="data-impressao">
+                             {% block dataImpressao %}08/10/2018{% endblock %}
+                         </b>
+                         <span class="endereco-empresa">
+                             {% block enderecoCompletoEmpresa %}CHAMPIONS ENSINO DE IDIOMAS LTDA ME - C.N.P.J. 25.188.695/0001-08, Rua Professora Ephigênia do Rego Barros, 102, Champagnat, Curitiba-PR{% endblock %}
+                         </span>
+                    </span>
+                </div>
+                <div class="data-impressao-completo">
+                    <span>
+                    Impressão {% block dataImpressaoCompleto %}99/99/9999 99:99:99{% endblock %}
+                    </span>
+                </div>        
+                <hr>        
+                <div>
+                    <span><b>Recebi de</b></span>
+                    <span class="texto-recebi-empresa">{{ block('reciboEmitenteNome') }}</span>
+                    <br>
+                    <span><b>a importância de</b></span>
+                    <span class="texto-recebi-importancia">{% block valorTotal %}72,20 {% endblock %}({% block valorExtenso %}Setenta e dois reais e vinte centavos{% endblock %})</span>
+                    <br>                   
+                    <span class="texto-referente-a"><b>Referente à</b></span>
+                    <span class="texto-referente-a-conteudo">{{ block('referente') }}</span>               
+                </div>
+                <hr>
+                <div>
+                    <table width="100%">
+                        <thead>
+                        {% block cabecalhoTabelas %}
+                            <th class="texto-tabela-esquerda">Categoria</th>        			
+                            <th class="texto-tabela-esquerda">Vencto.</th>
+                            <th class="texto-tabela-esquerda">Forma de Pagamento/Emitente</th>        			
+                            <th class="texto-tabela-esquerda">Desconto</th>
+                            <th class="texto-tabela-esquerda">Juros</th>
+                            <th class="texto-tabela-esquerda">Val Líq</th>
+                        {% endblock %}
+                        </thead>
+                        <tbody>
+                        {% block reciboTabela %}
+                            <tr>
+                                <td class="texto-tabela-esquerda">Outras</td>        				
+                                <td class="texto-tabela-esquerda">01/10/2018</td>
+                                <td class="texto-tabela-esquerda">inFlux Champagnat</td>        				
+                                <td class="texto-tabela-esquerda">100.0%</td>
+                                <td class="texto-tabela-esquerda">100.0%</td>
+                                <td class="texto-tabela-esquerda">99999.99</td>
+                            </tr>
+                            <tr>
+                                <td class="texto-tabela-esquerda" style="vertical-align: top;"><b>Detalhamento Movimento:</b></td>
+                                <td class="texto-tabela-esquerda" style="vertical-align: top;" colspan="6">Teste movimento</td>
+                            </tr>
+                            <tr>
+                                <td class="texto-tabela-esquerda" style="vertical-align: top;"><b>Detalhamento Titulo:</b></td>
+                                <td class="texto-tabela-esquerda" style="vertical-align: top;" colspan="6">Teste tiulo</td>
+                            </tr> 
+                        {% endblock %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>            				
+                                <th class="texto-tabela-esquerda">Total:</th>
+                                <th></th>
+                                <th class="texto-tabela-esquerda">{{ block('valorTotal') }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <hr>
+                <div>
+                    <div class="recibo-assinatura">
+                        <b>Recebido por</b>
+                        <div>
+                            <label>______________________________________</label>
+                            <label>{{ block('nomeFranqueadaData') }} </label>
+                        </div>
+                    </div>
+                </div>      
+            </div>
+    {% if nItens > 7 %}  
+        </div>     
+        <div class="page decorate">  
+    {% endif %}     
+            <div class="in-recibo">
+                <div>
+                    {{ block('logoInflux') }}        			
+                    <span>
+                        <b class="titulo-empresa">
+                            {{ block('nomeFranqueada') }}        			    
+                         </b>
+                         <b class="numero-recibo">
+                            Recibo Nº {{ block('reciboNumero') }}
+                         </b>
+                         <b class="data-impressao">
+                            {{ block('dataImpressao') }}
+                         </b>
+                         <span class="endereco-empresa">
+                             {{ block('enderecoCompletoEmpresa') }}            			 
+                         </span>
+                    </span>
+                </div>
+                <div class="data-impressao-completo">
+                    <span>
+                    Impressão {{ block('dataImpressaoCompleto') }}
+                    </span>
+                </div>        
+                <hr>        
+                <div>
+                    <span><b>Recebi de</b></span>
+                    <span class="texto-recebi-empresa">{{ block('reciboEmitenteNome') }}</span>
+                    <br>
+                    <span><b>a importância de</b></span>
+                    <span class="texto-recebi-importancia">{{ block('valorTotal') }}({{ block('valorExtenso') }})</span>
+                    <br>                   
+                    <span class="texto-referente-a"><b>Referente à</b></span>
+                    <span class="texto-referente-a-conteudo">{{ block('referente') }}</span>  
+                </div>
+                <hr>
+                <div>
+                    <table width="100%">
+                        <thead>
+                        {{ block('cabecalhoTabelas') }}            		
+                        </thead>
+                        <tbody>
+                        {{ block('reciboTabela') }}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>            				
+                                <th class="texto-tabela-esquerda">Total:</th>
+                                <th></th>
+                                <th class="texto-tabela-esquerda">{{ block('valorTotal') }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <hr>
+                <div>
+                    <div class="recibo-assinatura">
+                        <b>Recebido por</b>
+                        <div>
+                            <label>______________________________________</label>
+                            <label>{{ block('nomeFranqueadaData') }} </label>
+                        </div>
+                    </div>
+                </div>      
+            </div>  
+               
+           
+        </div>
+                
+        {% endblock %}
+        {% endfor %}
+        <div class="pages-footer"></div>
+
+</div>     
+    
+{% endblock %}

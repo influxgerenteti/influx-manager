@@ -1,0 +1,38 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+    
+        {
+            "type": "pwa-chrome",
+            "request": "launch",
+            "name": "front on chrome",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}"
+        },
+    
+    {
+        "name": "back",
+        "type": "php",
+        "request": "launch",
+        "runtimeArgs": [
+            "-dxdebug.mode=debug",
+            "-dxdebug.start_with_request=yes",
+            "-S",
+            "localhost:8000",
+            "-t",
+            "api/public/"
+        ],
+        "program": "",
+        "cwd": "${workspaceRoot}",
+        "port": 9003,
+        "serverReadyAction": {
+            "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
+            "uriFormat": "http://localhost:%s",
+            "action": "openExternally"
+        }
+    }
+    ]
+}

@@ -1,0 +1,39 @@
+# Feito com base no manual da Sicredi, arquivo com o que tem de diferente do generic/header_lote.yml.
+# https://www.sicredi.com.br/media/manual_cnab_240_040221.pdf
+
+codigo_banco:
+  # Código fornecido pelo Banco Central para identificação do Banco que está recebendo ou enviando o
+  # arquivo, com o qual se firmou o contrato de prestação de serviços.
+  # SICREDI = ‘756’
+  pos: [1, 3]
+  picture: '9(3)'
+  default: '748'
+
+forma_lancamento:
+  # Forma de Lançamento
+  # Uso Exclusivo FEBRABAN/CNAB, Padrão: Brancos
+  pos: [12, 13]
+  picture: 'X(2)'
+  default: ''
+
+versao_layout_lote:
+  # Código adotado pela FEBRABAN para identificar qual a versão de layout do arquivo encaminhado.
+  pos: [14, 16]
+  picture: '9(3)'
+  default: '040'
+
+codigo_convenio:
+  pos: [34, 49]
+  picture: 'X(16)'
+  default: ''
+
+agencia_dv:
+  pos: [59,59]
+  picture: 'X(1)'
+  default: ''
+
+agencia_mais_cedente_dv:
+  # Padrão: deixa em branco
+  pos: [73, 73]
+  picture: 'X(1)'
+  default: ''

@@ -1,0 +1,111 @@
+parameters:
+    # Adds a fallback DATABASE_URL if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+
+doctrine:
+    dbal:
+        # Habilita a busca de TIMEZONE baseada na classe
+        # types:
+           # datetime: App\Extensoes\UTCDateTimeType
+           # datetimetz: App\Extensoes\UTCDateTimeType
+           # time: App\Extensoes\UTCDateTimeType
+        default_connection:       base_principal
+        connections:
+            base_principal:
+                host:             '%env(DATABASE_PRINCIPAL_HOST)%'
+                port:             '%env(DATABASE_PRINCIPAL_PORT)%'
+                dbname:           '%env(DATABASE_PRINCIPAL_NAME)%'
+                user:             '%env(DATABASE_PRINCIPAL_USER)%'
+                password:         '%env(DATABASE_PRINCIPAL_PASSWORD)%'
+                driver:           pdo_mysql
+                charset:          UTF8
+                # options:
+                #    1002:   'SET sql_mode=(SELECT REPLACE(@@sql_mode,"ONLY_FULL_GROUP_BY","ONLY_FULL_GROUP_BY"))'
+            base_log:
+                host:             '%env(DATABASE_LOG_HOST)%'
+                port:             '%env(DATABASE_LOG_PORT)%'
+                dbname:           '%env(DATABASE_LOG_NAME)%'
+                user:             '%env(DATABASE_LOG_USER)%'
+                password:         '%env(DATABASE_LOG_PASSWORD)%'
+                driver:           pdo_mysql
+                charset:          UTF8
+            base_importacao:
+                host:             '%env(DATABASE_IMPORTACAO_HOST)%'
+                port:             '%env(DATABASE_IMPORTACAO_PORT)%'
+                dbname:           '%env(DATABASE_IMPORTACAO_NAME)%'
+                user:             '%env(DATABASE_IMPORTACAO_USER)%'
+                password:         '%env(DATABASE_IMPORTACAO_PASSWORD)%'
+                driver:           pdo_mysql
+                charset:          UTF8
+            oracle:
+                dbname:           foundation_gati
+                user:             root
+                password:         root
+                host:             localhost
+                driver:           pdo_oci
+            #Configuracao aqui abaixo eh para realizar conexao com o protheus
+            progress:
+                driver:             Progress OpenEdge 10.2B Driver
+                host:               172.20.0.9
+                port:               33690
+                user:               sysprogress
+                password:           sysprogress
+                dbname:             cad2multi
+                options:
+                  level:            'READ UNCOMMITTED'    
+    orm:        
+        auto_generate_proxy_classes:  '%kernel.debug%'
+        proxy_dir:            '%kernel.cache_dir%/doctrine/orm/Proxies'
+        proxy_namespace:      Proxies
+        default_entity_manager: base_principal
+        #Como o entity_manager foi declaro explicitamente, tem que declarar as extensões manualmente
+        #Link para referencia: https://symfony.com/doc/current/doctrine/custom_dql_functions.html        
+        entity_managers:
+            base_principal:
+                #Configuracao para utilizar as funções como "TIME" da base do DoctrineExtensions
+                #Para saber quais funções estão disponiveis, verificar: https://github.com/beberlei/DoctrineExtensions
+                dql:
+                  string_functions:
+                    DATE_FORMAT: DoctrineExtensions\Query\Mysql\DateFormat
+                    GROUP_CONCAT: DoctrineExtensions\Query\Mysql\GroupConcat
+                    TIME: DoctrineExtensions\Query\Mysql\Time
+                    WEEK: DoctrineExtensions\Query\Mysql\Week
+                    YEAR: DoctrineExtensions\Query\Mysql\Year
+                    YEARWEEK: DoctrineExtensions\Query\Mysql\YearWeek
+                    DAY:  DoctrineExtensions\Query\Mysql\Day
+                    NOW:  DoctrineExtensions\Query\Mysql\Now
+                    MONTH: DoctrineExtensions\Query\Mysql\Month
+                    ANY_VALUE: DoctrineExtensions\Query\Mysql\AnyValue
+                    FIRST: App\Extensoes\FirstFunction                    
+                connection: base_principal
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    base_principal:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity/Principal'
+                        prefix: App\Entity\Principal
+                        alias: base_principal
+            base_log:
+                connection: base_log
+                auto_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    base_log:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity/Log'
+                        prefix: App\Entity\Log
+                        alias: base_log
+            base_importacao:
+                connection: base_importacao
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    base_importacao:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity/Importacao'
+                        prefix: App\Entity\Importacao
+                        alias: base_importacao

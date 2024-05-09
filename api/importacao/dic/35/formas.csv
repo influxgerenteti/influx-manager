@@ -1,0 +1,12 @@
+id;descricao;sponte
+307;"Cartão de crédito";"Cartão de Crédito"
+308;"Cartão de débito";"Cartão de Débito"
+309;"Cheque";"Cheque"
+309;"Cheque";"Cheque Pré-Datado"
+310;"Cobrança bancária";"Cobrança Bancária"
+311;"Dinheiro";"Dinheiro"
+312;"Transferência bancária";"Transferência bancária"
+313;"MB Way";"MB Way"
+314;"Boleto bancário teste";"Boleto bancário teste"
+315;"Pix";"PIX"
+311;"Dinheiro";""

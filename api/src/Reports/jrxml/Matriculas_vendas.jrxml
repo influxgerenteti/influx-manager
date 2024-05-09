@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Matriculas" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94a62efa-c887-4c10-aafd-c7b39d728059">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="528"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="460"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<parameter name="clausulaWhere" class="java.lang.String"/>
+	<parameter name="nomeFranqueada" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="logoInflux" class="java.lang.String" isForPrompting="false"/>
+	<queryString language="SQL">
+		<![CDATA[select
+		date_format(c.data_matricula, "%d/%m/%Y") as data_matricula,
+		(select icr.valor
+			from item_conta_receber icr
+			inner join item it
+				on icr.item_id = it.id
+		 where 
+			icr.conta_receber_id = c.id
+			and it.tipo_item_id = 2) as taxa_matricula,
+		fp.descricao as tipo_pagamento,
+		(select icr.percentual_desconto
+			from item_conta_receber icr
+			inner join item it
+				on icr.item_id = it.id
+		 where 
+			icr.conta_receber_id = c.id
+			and it.tipo_item_id = 2) as percentual_desconto,
+		"Não" as super_amigos,
+		f.apelido as consultor, 
+		case 
+			when i.tipo_lead = 'A' then	
+				"Ativo"
+			else
+				"Receptivo"
+			end as matricula
+			
+from contrato c
+
+inner join conta_receber cr
+	on cr.contrato_id = c.id
+	
+inner join titulo_receber tr
+	on tr.conta_receber_id = cr.id 
+	and POSITION("Matrícula" IN tr.observacao) > 0
+	
+inner join forma_pagamento fp
+	on tr.forma_recebimento_id = fp.id
+
+inner join funcionario f
+	on c.responsavel_venda_funcionario_id = f.id
+
+inner join aluno a
+	on c.aluno_id = a.id
+	
+left join interessado i
+	on i.aluno_id = a.id	
+	
+where $P!{clausulaWhere}]]>
+	</queryString>
+	<field name="data_matricula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="data_matricula"/>
+	</field>
+	<field name="taxa_matricula" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="taxa_matricula"/>
+	</field>
+	<field name="tipo_pagamento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_pagamento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="forma_pagamento"/>
+	</field>
+	<field name="percentual_desconto" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="percentual_desconto"/>
+	</field>
+	<field name="super_amigos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="super_amigos"/>
+	</field>
+	<field name="consultor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="consultor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="funcionario"/>
+	</field>
+	<field name="matricula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="matricula"/>
+	</field>
+	<pageHeader>
+		<band height="101" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="20" width="680" height="30" forecolor="#3E515B" uuid="3bc8d15f-bcac-444c-adb3-1d4ede42dab7">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeFranqueada}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="700" y="0" width="100" height="100" uuid="fc41643d-94e1-4864-917b-28e6833bf49e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{logoInflux}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="50" width="680" height="51" uuid="e2905cad-5bc5-4659-8780-2538ec00dda8">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Raleway SemiBold" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Matrículas (Vendas)]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<rectangle>
+				<reportElement x="0" y="17" width="800" height="1" forecolor="rgba(235, 236, 240, 0.0)" backcolor="#EBECF0" uuid="bb29614b-cd0d-4848-b999-daad68e9e3ec">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="4" width="80" height="11" uuid="144829f1-daa6-418f-bc32-5451a4f76cfc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3cfdc80a-d8c9-4559-b346-3212bd4acc6a"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Matrícula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="94" y="4" width="92" height="11" uuid="3862b6ed-fa70-45bb-b745-a07c7c239f21">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6bfa177-42cb-468f-bc68-5610d711d495"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Taxa Matrícula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="245" y="4" width="80" height="11" uuid="8ac2af5f-70b6-46be-a029-80860413ec4d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c43bbd82-fba7-4211-9b5a-e4538ad60102"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Pagamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="4" width="75" height="11" uuid="5c34f2e6-6faa-4932-9df2-65f5f6390dfe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="abc5adbd-f6bc-402b-b1c5-538481e7fce9"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Percentual Desconto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="4" width="90" height="11" uuid="f7af2e20-c958-46bc-9067-866da108bf74">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="996ec514-f33b-4011-b0ec-1dcfbc767dde"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Super Amigos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="577" y="4" width="93" height="11" uuid="63770150-3c09-465a-bad6-cf4f40370942">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cce07417-0822-418c-9cde-016efcb69ec3"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consultor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="688" y="4" width="114" height="11" uuid="dab492c0-f2ba-474a-959e-2828397a6568">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8bdac446-f5a5-4316-8423-befead2d8e50"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="2" width="80" height="11" uuid="2393c0f5-4a56-4259-b34e-b28d70a02b46">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3cfdc80a-d8c9-4559-b346-3212bd4acc6a"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_matricula}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="94" y="2" width="92" height="11" uuid="919608c5-e7a3-47cf-bf86-b4469eceb12f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6bfa177-42cb-468f-bc68-5610d711d495"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{taxa_matricula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="245" y="2" width="80" height="11" uuid="be866bdd-d35a-4f05-9f43-127d8d158b57">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c43bbd82-fba7-4211-9b5a-e4538ad60102"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_pagamento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="345" y="2" width="75" height="11" uuid="d233fa26-1340-48d7-bc40-c79f7d01dbce">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="abc5adbd-f6bc-402b-b1c5-538481e7fce9"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{percentual_desconto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="2" width="90" height="11" uuid="ca6bdb99-f24c-4009-8ff2-0d566dd404c1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="996ec514-f33b-4011-b0ec-1dcfbc767dde"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{super_amigos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="577" y="2" width="93" height="11" uuid="2b9bc50e-1501-47ef-8fb6-a3dd7af27d83">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cce07417-0822-418c-9cde-016efcb69ec3"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{consultor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="688" y="2" width="114" height="11" uuid="90972a15-6c0c-4118-a67f-a4c226bcdcf5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8bdac446-f5a5-4316-8423-befead2d8e50"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{matricula}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="0" y="15" width="800" height="1" forecolor="rgba(235, 236, 240, 0.0)" backcolor="#FAFAFA" uuid="8b870bb2-4b6f-42b0-aa4e-bf182ded9bd5">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</rectangle>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="5" width="164" height="17" forecolor="#3E515B" uuid="69b78d41-b2f9-4015-969a-8a959c5ebf6d"/>
+				<textElement>
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<text><![CDATA[inFlux Manager]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="286" y="5" width="100" height="17" forecolor="#3E515B" uuid="f79a361f-b046-49bd-94ee-1a65160da7c9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="386" y="5" width="100" height="17" forecolor="#3E515B" uuid="62b1d158-7d6a-48a4-a53b-0ab3a46a2821"/>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/mm/yyyy HH:mm">
+				<reportElement x="684" y="5" width="116" height="17" forecolor="#0D151A" uuid="822cb047-e423-4ccc-a7ec-f4221f2c2789">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd/MM/yyyy HH:mm")).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

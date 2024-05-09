@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <style>
+              body {
+                background: rgb(204, 204, 204);
+              }
+              page {
+                background: white;
+                display: block;
+                margin: 0 auto;
+                padding: 2em;
+                margin-bottom: 0.5cm;
+                text-align: justify;
+                font-size: 1em;
+              }
+              page[size="A4"] {
+                width: 21cm;
+                
+              }
+              page[size="A4"][layout="portrait"] {
+                width: 29.7cm;
+                
+              }
+                     .content {
+                        
+                          font-size: 13px;
+                      }
+                      
+                      .section {
+                          margin: 0.5em 0;
+                          font-size: 14px;
+                      }
+
+                      .li {
+                          list-style-type: none;
+                      }
+                      
+                      .ul .li {
+                          margin-left: 20px;
+                      }
+
+                      .sub-list li {
+                          margin-left: 40px;
+                      }
+                      
+                      .h2 {
+                          font-size: 12px;
+                          font-weight: 600;
+                          margin: 20px 0 5px 0;
+                      }
+                      
+                      .breakpage {
+                          page-break-before: always;
+                      }
+                      
+                      .imagens {
+                          padding-left: 0.5cm;
+                          padding-top: 0.2cm;
+                      }
+                      .img-header{
+                          height: 150px; 
+                          width: 730px;
+                      }
+                      .img-footer{
+                          height: 45px; 
+                          width: 98%;
+                      }
+                      .corpo-pagina {
+                        height: 21.8cm;
+                        position: static;
+                        padding-left: 0.5cm;
+                        left: 1cm;
+                        top: 5.8cm;
+                        padding-right: 0.5cm;
+                      }
+                      .page {
+                          display: block;
+                          margin: 0 auto;
+                          margin-bottom: 0.5cm;
+                          text-align: justify;
+                          font-size: 1em;
+                          background-color: white !important;
+                          padding: 0em;
+                          margin-top: 2cm;
+                          width: 20cm;
+                          height: 28.7cm;
+                          box-shadow: 0px 0px 15px -5px #00000055;
+                      }
+              @media print {
+                body,
+                page {
+                  margin: 0;
+                  box-shadow: 0;
+                  
+                }
+                 page[size="A4"] {
+                    width: 21cm;
+                    height: 29.7cm;
+                  }
+                  page[size="A4"][layout="portrait"] {
+                    width: 29.7cm;
+                    height: 21cm;
+                  }
+                  .content {
+                          font-size: 13px;
+                      }
+                      
+                      .section {
+                          margin: 0.5em 0;
+                          font-size: 13px;
+                      }
+                  .pagebreak {
+                      page-break-before: always;
+                  }
+                  .page {
+                      /* padding-left: 0.8cm; */
+                      /* padding-top: 0.8cm; */
+                      padding: 0em;
+                      margin: 0;
+                      width: 21cm;
+                      height: 29.4cm;
+                      box-shadow: none;
+                  }
+              
+                  .corpo-pagina {
+                      height: 22.3cm;
+                      position: static;
+                      left: 0cm;
+                      top: 5.8cm;
+                  }
+                   .h2, .section, .content { 
+                      font-size: 14.3px;
+                  }
+              }
+              .header {
+                
+                text-align: center;
+                
+              }
+             
+        </style>
+    </head>
+<body>
+    <!-- <page size="A4"> -->
+
+        [CONTENT]
+
+    <!-- </page> -->
+</body>
+</html>
+
+
+
+

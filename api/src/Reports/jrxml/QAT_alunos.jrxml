@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="QAT_alunos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="4" bottomMargin="10" uuid="7c01c880-ba43-466d-b6ac-6237a77df426">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<parameter name="turma_id" class="java.lang.String"/>
+	<parameter name="franqueada_id" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select pessoa.nome_contato
+from contrato
+inner join aluno
+	on contrato.aluno_id = aluno.id
+inner join pessoa
+	on aluno.pessoa_id = pessoa.id
+where contrato.turma_id = $P{turma_id}
+	and contrato.franqueada_id = $P{franqueada_id}
+	and aluno.situacao = 'ATI'
+order by pessoa.nome_contato]]>
+	</queryString>
+	<field name="nome_contato" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome_contato"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="pessoa"/>
+	</field>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="250" height="11" uuid="c4b838ac-baf5-49fa-a0d1-969e2d5074ea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50159657-8fe7-4ed9-8b90-bbc69e2d09ed"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome_contato}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

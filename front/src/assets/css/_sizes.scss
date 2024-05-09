@@ -1,0 +1,21 @@
+.w-auto {
+  flex-grow: 1;
+  width: auto !important;
+}
+
+.mw-35 {
+  max-width: 35px;
+}
+
+.mw-28 {
+  max-width: 35px;
+}
+
+.w-40 {
+  min-width: 20px;
+  width: 40px;
+}
+
+textarea.form-control[rows="3"] {
+  height: 73px;
+}

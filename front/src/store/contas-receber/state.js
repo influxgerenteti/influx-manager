@@ -1,0 +1,56 @@
+export default {
+  lista: [],
+  estaCarregando: false,
+  paginaAtual: 1,
+  order: '',
+  direcao: '',
+  totalItens: null,
+  relatorio: '',
+  totalFaturado: 0,
+  totalRecebido: 0,
+  totalMovimentado: 0,
+  totalRecebidoNaoConciliado: 0,
+  totalReceber: 0,
+  totalVencido: 0,
+  totalCancelado: 0,
+  todosItensCarregados: false,
+  itemSelecionadoID: null,
+  itemSelecionado: {
+    id: null
+    /*
+    fornecedor_pessoa: null,
+    forma_cobranca: null,
+    data_vencimento: '',
+    valor_parcela: 0,
+    numero_parcelas: 0,
+    valor_total: 0,
+    observacao: null,
+    conta: null,
+    itens: [],
+    parcelas: {},
+    plano_conta: [{ plano_conta: null, valor: 0, complemento: null, numero_sequencia: 1 }],
+    quitar_primeira_parcela: false
+    */
+  },
+  filtros: {
+    mes: {value: (new Date()).getMonth(), text: (new Date()).toLocaleString('pt-br', {month: 'long'})},
+    ano: (new Date()).getFullYear(),
+    situacao: ['VEN'],
+    busca: '',
+    formato_impressao: '',
+    data_inicial_vencimento: '',
+    data_final_vencimento: '',
+    valor_inicial: '',
+    valor_final: '',
+    sacado_pessoa: null,
+    item: null,
+    forma_cobranca: null,
+    turma: null,
+    contrato: null,
+    nosso_numero: null,
+    conta: null,
+    agencia: null,
+    data_inicio:'',
+    data_fim:''
+  }
+}

@@ -1,0 +1,311 @@
+{% extends "relatorios/pages.html" %}
+
+ 
+{% block page %}
+    <style>
+        .decorate{
+        
+            background: url("{{ absolute_url(asset('templates/relatorios/class_record/decorate.png'))  }}") no-repeat; 
+            background-size: cover;  
+        
+        }
+    
+        body{
+            
+            font-size: 0.8em;
+        }
+        .header{
+            position:relative;
+            height:4.5cm;
+        }
+        .area_itens{
+            height: 17.9cm;
+            position: static;
+            left: 1cm;
+            top: 5.8cm;
+        }
+        .aluno{
+            position:relative; 
+            height: 0.5cm;
+        }
+        .descricao_alunos{
+            position: relative;
+            top: 1.4cm;
+            left: 1cm;
+        } 
+        .nota_mid_term_oral{
+            position: absolute;
+            top: 1.4cm;
+            left: 11.8cm;
+            font-size: 80%;
+        } 
+        .nota_mid_term_test{
+            position: absolute;
+            top: 1.4cm;
+            left: 12.3cm;
+            font-size: 80%;
+        }
+        .nota_mid_term_composition{
+            position: absolute;
+            top: 1.4cm;
+            left: 13.05cm;
+            font-size: 80%;
+            
+        }
+        .nota_mid_term_escrita{
+            position: absolute;
+            top: 1.4cm;
+            left: 13.79cm;
+            font-size: 80%;
+        }
+        .nota_final_oral{
+            position: absolute;
+            top: 1.4cm;
+            left: 14.7cm;
+            font-size: 80%;
+        } 
+        .nota_final_test{
+            position: absolute;
+            top: 1.4cm;
+            left: 15.32cm;
+            font-size: 80%;
+        } 
+        .nota_final_composition{
+            position: absolute;
+            top: 1.4cm;
+            left: 16.06cm;
+            font-size: 80%;
+        } 
+        .nota_final_escrita{
+            position: absolute;
+            top: 1.4cm;
+            left: 16.8cm;
+            font-size: 80%;
+        } 
+        .nota_retake_mid_term_oral{
+            position: absolute;
+            top: 1.4cm;
+            left: 17.76cm;
+            font-size: 80%;
+        } 
+        .nota_retake_mid_term_escrita{
+            position: absolute;
+            top: 1.4cm;
+            left: 18.36cm;
+            font-size: 80%;
+        } 
+        .nota_retake_final_oral{
+            position: absolute;
+            top: 1.4cm;
+            left: 19.3cm;
+            font-size: 80%;
+        }  
+        .nota_retake_final_escrita{
+            position: absolute;
+            top: 1.4cm;
+            left: 19.83cm;
+            font-size: 80%;
+        }         
+        .instrutorLicao{
+            position: absolute;
+            left: 18.3cm;
+            letter-spacing: -0.08em;
+        } 
+        .item{
+            position:relative;
+            height: 0.5cm;
+        }
+
+        .data{
+            position: inherit;
+            left: 0.3cm;
+        }
+        .descricao{
+            position: absolute;
+            left: 1.6cm;
+            letter-spacing: -0.08em;
+
+        }.detalhes_presenca{
+            position: absolute;
+            letter-spacing: -0.08em;
+
+        }.detalhes_atividade_ca{
+            position: absolute;
+            letter-spacing: -0.08em;
+            font-size: 75%;
+            top: -0.07cm;
+
+        }.detalhes_atividade_ce{
+            position: absolute;
+            letter-spacing: -0.08em;
+            font-size: 75%;
+            top: 0.15cm;
+        }
+        .name{
+            position: absolute;
+            top: 0.3cm;
+            left: 4.5cm;
+            width: 250px;
+            line-height:15px;
+            letter-spacing: 0.08em;
+        }
+        .classroom{
+            position: absolute;
+            top: 0.5cm;
+            left: 11.5cm;
+        }
+        .teacher{
+            position: absolute;
+            top: 0.5cm;
+            left: 15.5cm;
+        }
+        .daystime{
+            position: absolute;
+            top: 1.7cm;
+            left: 9.5cm;
+        }
+        .book{
+            position: absolute;
+            top: 1.7cm;
+            left: 18.0cm;
+        }.empty{
+            grid-area: cabecalho;
+            background-color: #1867c0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 10px;
+            z-index: 1;
+            box-shadow: 0px 4px 9px -2px rgba(0,0,0,0.75);
+            font-weight: 300;
+            font-size: 2rem;
+        }
+        @media print {
+            .name{
+                position: absolute;
+                top: 0.2cm;
+                left: 4.5cm;
+            }
+            .classroom{
+                position: absolute;
+                top: 0.2cm;
+                left: 12.5cm;
+            }
+            .teacher{
+                position: absolute;
+                top: 0.2cm;
+                left: 16.5cm;
+            }
+            .daystime{
+                position: absolute;
+                top: 1.5cm;
+                left: 10.0cm;
+            }
+            .book{
+                position: absolute;
+                top: 1.5cm;
+                left: 19.0cm;
+            } 
+            .item{
+                position:relative;
+                height: 0.53cm;
+            }
+            .area_itens{
+                height: 19.1cm;
+                position: static;
+                left: 1cm;
+                top: 5.8cm;
+            }
+            .aluno{
+                position:relative;
+                height: 0.53cm;
+            }
+            .descricao_alunos{
+                position: relative;
+                top: 1.4cm;
+                left: 1cm;
+            }.pagebreak 
+                { page-break-after: always; }
+        }
+
+    </style>
+    <div>
+        {% if turmas != null %}   
+            {% for turma in turmas %}
+            {% block turma %}
+                <div class="page decorate">
+                    
+                    <div class="header">
+                        <span class="name" >{{turma.name}}</span>
+                        <span class="classroom" >{{turma.classroom}}</span>
+                        <span class="teacher" >{{turma.teacher}}</span>
+
+                        <span class="daystime" >{{turma.daystime}}</span>
+                        <span class="book" >{{turma.book}}</span>
+                    </div>
+
+                        <div class="area_itens">
+                        
+                            {% for item in turma.itens %}
+                            {% block item %}
+                                <div class="item">
+                                    <span class ="data">{{item.date_lesson}}</span>
+                                    <span class ="descricao">{{item.lesson}}</span>
+                                    <span class ="instrutorLicao">{{item.instrutor}}</span>
+                                    {% set proporcao = 0.6 %} {# Defina a proporção desejada aqui #}
+                                    {% set incPresenca = 0.47 %} {# Defina o valor do incremento desejado aqui #}
+                                    {% set leftIniPresenca = 8.4 %} {# Defina o valor inicial do left aqui #}
+                                    {% set leftIniAtividadeCA = 12.97 %} {# Defina o valor inicial do left aqui #}
+                                    {% set leftIniAtividadeCE = 13.15 %} {# Defina o valor inicial do left aqui #}
+                                    
+                                    {% for detalhes in item.detalhes %}
+                                    {% set leftAtualPresenca = leftIniPresenca + loop.index * incPresenca %}
+                                    {% set leftAtualAtividadeCA = leftIniAtividadeCA + loop.index * incPresenca %}
+                                    {% set leftAtualAtividadeCE = leftIniAtividadeCE + loop.index * incPresenca %}
+                                        <span class="detalhes_presenca" style="left: {{ leftAtualPresenca }}cm;">{{ detalhes.presenca }}</span>
+                                        <span class="detalhes_atividade_ca" style="left: {{ leftAtualAtividadeCA }}cm;">{{ detalhes.atividade_ca }}</span>
+                                        <span class="detalhes_atividade_ce" style="left: {{ leftAtualAtividadeCE }}cm;">{{ detalhes.atividade_ce }}</span>
+                                    {% endfor %}
+                                </div> 
+                            {% endblock %}
+                            {% endfor %}
+                        </div>
+                        {% for aluno in turma.alunos %}
+                        {% block aluno %}
+                            <div class="aluno">
+                                <span class ="descricao_alunos">{{aluno.nome_aluno}}</span>
+                                    <span class="nota_mid_term_oral">{{ aluno.alunoAvaliacaos[0].avaliacao.nota_mid_term_oral.descricao|default(" ") }}</span>
+                                    <span class="nota_mid_term_test">{{ aluno.alunoAvaliacaos[0].avaliacao.nota_mid_term_test|default(" ") }}</span>
+                                    <span class ="nota_mid_term_composition">{{aluno.alunoAvaliacaos[0].nota_mid_term_composition|default(" ") }}</span>
+                                    <span class ="nota_mid_term_escrita">{{aluno.alunoAvaliacaos[0].nota_mid_term_escrita|default(" ") }}</span>
+                                    <span class ="nota_final_oral">{{aluno.alunoAvaliacaos[0].nota_final_oral.descricao|default(" ") }}</span>
+                                    <span class ="nota_final_test">{{aluno.alunoAvaliacaos[0].nota_final_test|default(" ") }}</span>
+                                    <span class ="nota_final_composition">{{aluno.alunoAvaliacaos[0].nota_final_composition|default(" ") }}</span>
+                                    <span class ="nota_final_escrita">{{aluno.alunoAvaliacaos[0].nota_final_escrita|default(" ") }}</span>
+                                    <span class ="nota_retake_mid_term_oral">{{aluno.alunoAvaliacaos[0].nota_retake_mid_term_oral.descricao|default(" ") }}</span>
+                                    <span class ="nota_retake_mid_term_escrita">{{aluno.alunoAvaliacaos[0].nota_retake_mid_term_escrita|default(" ") }}</span>
+                                    <span class ="nota_retake_final_oral">{{aluno.alunoAvaliacaos[0].nota_retake_final_oral.descricao|default(" ") }}</span>
+                                    <span class ="nota_retake_final_escrita">{{aluno.alunoAvaliacaos[0].nota_retake_final_escrita|default(" ") }}</span>
+                            </div>
+                        {% endblock %}
+                        {% endfor %}                        
+                        {% if not loop.last %} 
+                            <div class="pagebreak"></div>            
+                        {% endif %}
+                        
+                    </div>                    
+                    
+            {% endblock %}
+            {% endfor %}
+            <div class="pages-footer"></div>
+        {% else %} 
+            <div >
+                <span class ="empty">Sem dados</span>
+            </div> 
+        {% endif %}    
+
+    </div>     
+    
+{% endblock %}

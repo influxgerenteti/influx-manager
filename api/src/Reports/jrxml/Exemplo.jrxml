@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Exemplo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ac24223c-c802-4236-a52f-d95a04498ce0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="nomeFranqueada" class="java.lang.String"/>
+	<parameter name="logoInflux" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select id, descricao, coalesce(saldo_estoque, 0) as saldo_estoque, valor_compra, valor_venda, tipo_item from item]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="saldo_estoque" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="saldo_estoque"/>
+	</field>
+	<field name="valor_compra" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="valor_compra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="valor_venda" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="valor_venda"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<field name="tipo_item" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo_item"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="item"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement x="454" y="0" width="100" height="100" uuid="87eebad8-7592-4b5c-8dd8-4ee70c7eff4a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{logoInflux}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="50" width="424" height="51" uuid="590c8f39-f391-4c67-9d0a-29b42d2224dc">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Raleway SemiBold" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE ITEMS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="20" width="424" height="30" forecolor="#3E515B" uuid="e93c961a-6b07-4ec4-aeb3-5ed8a90bc130">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeFranqueada}.toUpperCase()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="380" y="9" width="174" height="18" forecolor="#4A4A4A" uuid="dfb7a01a-b520-4ac8-9502-6c7cf24e7d8b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3c84d929-5322-474b-96eb-37666d868d20"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Saldo em estoque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="9" width="100" height="18" forecolor="#4A4A4A" uuid="66c47897-c35f-4ec3-b8d5-139f59e603f4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="caa73e54-c632-4b25-a95f-b82e5673b2ec"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="27" width="555" height="3" forecolor="rgba(235, 236, 240, 0.0)" backcolor="#EBECF0" uuid="66ebbc9c-9fd1-4d3d-942e-dc1cf2f5feac">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField pattern="#,##0.00#">
+				<reportElement x="388" y="0" width="161" height="22" forecolor="#151B1E" uuid="ede01b66-fe31-4121-9c3a-5f1b7cd83ff5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3c84d929-5322-474b-96eb-37666d868d20"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldo_estoque}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="0" width="364" height="22" forecolor="#151B1E" uuid="89dc14ba-8103-49df-8413-0eac54e5d9e8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="caa73e54-c632-4b25-a95f-b82e5673b2ec"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="33" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="1" forecolor="rgba(235, 236, 240, 0.0)" backcolor="#EBECF0" uuid="7332489a-06e9-4201-92c1-54be95d06078"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="10" width="164" height="15" forecolor="#3E515B" uuid="852fed3d-4213-4f22-9573-f931095153b3"/>
+				<textElement>
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<text><![CDATA[inFlux Manager]]></text>
+			</staticText>
+			<textField pattern="dd/mm/yyyy HH:mm">
+				<reportElement x="433" y="10" width="116" height="15" forecolor="#3E515B" uuid="996b23b4-9f9c-429b-bc4d-c9f3497be9b8">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="280" y="10" width="100" height="15" forecolor="#3E515B" uuid="b1fde18f-421c-4e1a-981e-4b3846cca069"/>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="10" width="100" height="15" forecolor="#3E515B" uuid="5c4c056c-8ae0-4b99-8bf6-1c3d7b326a1e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

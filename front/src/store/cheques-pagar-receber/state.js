@@ -1,0 +1,42 @@
+export default {
+  paginaAtual: 1,
+  estaCarregando: false,
+  order: '',
+  direcao: '',
+  todosItensCarregados: false,
+  totalItens: null,
+  chequeSelecionadoId: null,
+  listaChequesPagarReceber: [],
+  filtros: {
+    tipo: '',
+    mes_entrada: '',
+    mes_bom_para: '',
+    data_entrada_inicial: '',
+    data_entrada_final: '',
+    data_bom_para_inicial: '',
+    data_bom_para_final: '',
+    data_devolvido_inicial: '',
+    data_devolvido_final: '',
+    numero_cheque: '',
+    aluno: '',
+    conta: '',
+    banco: null,
+    valor_inicial: 0,
+    valor_final: 0,
+    situacao: ['P']
+  },
+  objCheque: {
+    id: null,
+    numero: null,
+    banco: null,
+    data_bom_para: null,
+    data_entrada: null,
+    valor: '',
+    situacao: '',
+    agencia: '',
+    conta: '',
+    observacao: '',
+    titular: '',
+    complemento: ''
+  }
+}

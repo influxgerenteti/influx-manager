@@ -1,0 +1,26 @@
+@each $color, $value in $theme-colors {
+  .modal-#{$color} {
+
+    .modal-content {
+      border-color: $value;
+    }
+
+    .modal-header {
+      color: #fff;
+      background-color: $value;
+    }
+  }
+}
+
+.modal-header {
+  padding: 0.75rem;
+}
+
+.modal-header .close {
+  padding: 0.75rem;
+  margin: -0.75rem -0.75rem -0.75rem auto;
+}
+
+.modal-dialog.modal-xl {
+  max-width: 1024px;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Versões</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+</head>
+<body>
+    <h1>Versões</h1>
+    <div id="versions-list"></div>
+
+    <script>
+        // Função para carregar e exibir os registros do arquivo versions.json
+        async function loadVersions() {
+            try {
+                const response = await axios.get('versions/versions.json');
+                const versions = response.data;
+                const versionsList = document.getElementById('versions-list');
+
+                versions.forEach(version => {
+                    const versionDiv = document.createElement('div');
+                    versionDiv.innerHTML = `
+                        <h2>${version.nome}</h2>
+                        <p>Data: ${version.data}</p>
+                        <a href="${version.url}" target="_blank">Link</a>
+                        <button onclick="loadNotes('${version.nome}-notes', '${version.notes}')">Mostrar Notas</button>
+
+                        <div id="${version.nome}-notes"></div>
+                    `;
+                    versionsList.appendChild(versionDiv);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar versões', error);
+            }
+        }
+
+        async function loadNotes(elementId, notesUrl) {
+            try {
+                const response = await axios.get(notesUrl);
+                const notesContent = response.data;
+                const notesDiv = document.getElementById(elementId);
+                console.log(marked);
+                notesDiv.innerHTML = marked.parse(notesContent);
+            } catch (error) {
+                console.error('Erro ao carregar notas', error);
+            }
+        }
+
+        // Carregar as versões quando a página carregar
+        window.onload = loadVersions;
+    </script>
+</body>
+</html>

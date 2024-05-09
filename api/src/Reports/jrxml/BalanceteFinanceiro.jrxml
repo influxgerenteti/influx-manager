@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BalanceteFinanceiro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="94a62efa-c887-4c10-aafd-c7b39d728059">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="InfluxDatabase"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="656"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="330"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<style name="Crosstab_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#EBECF0"/>
+			<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#EBECF0"/>
+			<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#EBECF0"/>
+			<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CG" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#EBECF0"/>
+			<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#EBECF0"/>
+			<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#EBECF0"/>
+			<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CT" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#EBECF0"/>
+			<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#EBECF0"/>
+			<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#EBECF0"/>
+			<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#EBECF0"/>
+			<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#EBECF0"/>
+			<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#EBECF0"/>
+			<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="franqueada_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="conta" class="java.lang.String">
+		<defaultValueExpression><![CDATA["3"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data_inicial" class="java.lang.String"/>
+	<parameter name="data_final" class="java.lang.String">
+		<defaultValueExpression><![CDATA["2019-12-31"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nomeFranqueada" class="java.lang.String"/>
+	<parameter name="logoInflux" class="java.lang.String"/>
+	<parameter name="mes_inicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA["01"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT movimentoConta.observacao, data_contabil,   
+	CASE
+    WHEN operacao = 'C' THEN 
+		valor_lancamento
+    ELSE 
+    	valor_lancamento*(-1)
+   	END AS valor, 
+   	CASE
+    WHEN operacao = 'D' THEN 
+		"Despesas"
+    ELSE 
+    	"Receitas"
+   	END AS operacao, (
+						select					
+							CASE
+							    WHEN operacao = 'D' THEN 
+									valor_saldo_final_conta + valor_lancamento
+							    ELSE 
+							    	valor_saldo_final_conta - valor_lancamento
+							end as saldo
+						FROM movimento_conta 
+						where 
+							movimentoConta.franqueada_id = $P{franqueada_id} and	
+							conta_id = $P{conta} and	
+							month(data_contabil) = $P{mes_inicial}
+						order by data_movimento
+						limit 1
+					 ) as saldo_inicial,
+	conta.descricao as descricao_conta
+FROM movimento_conta movimentoConta
+inner join conta
+	on movimentoConta.conta_id = conta.id
+where 
+	movimentoConta.franqueada_id = $P{franqueada_id} and	
+	conta_id = $P{conta}  and	
+	data_contabil >= $P{data_inicial} and
+	data_contabil <= $P{data_final}
+order by data_contabil]]>
+	</queryString>
+	<field name="observacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="observacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="movimento_conta"/>
+	</field>
+	<field name="data_contabil" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="data_contabil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="movimento_conta"/>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+	</field>
+	<field name="operacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="operacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="movimento_conta"/>
+	</field>
+	<field name="saldo_inicial" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="saldo_inicial"/>
+	</field>
+	<field name="descricao_conta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descricao_conta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="conta"/>
+	</field>
+	<pageHeader>
+		<band height="101" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="20" width="680" height="30" forecolor="#3E515B" uuid="3bc8d15f-bcac-444c-adb3-1d4ede42dab7">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nomeFranqueada}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="700" y="0" width="100" height="100" uuid="fc41643d-94e1-4864-917b-28e6833bf49e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{logoInflux}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="50" width="680" height="51" uuid="ce88c0d6-6057-4bc9-b18e-5891d7fa124a">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Raleway SemiBold" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["BALANCETE FINANCEIRO"+"   de "+ $P{data_inicial}.substring( 8, 10 )+"/"+$P{data_inicial}.substring( 5, 7 )+"/"+$P{data_inicial}.substring( 0, 4 ) + " á " + $P{data_final}.substring( 8, 10 )+"/"+$P{data_final}.substring( 5, 7 )+"/"+$P{data_final}.substring( 0, 4 )]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="0" y="5" width="164" height="17" forecolor="#3E515B" uuid="69b78d41-b2f9-4015-969a-8a959c5ebf6d"/>
+				<textElement>
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<text><![CDATA[inFlux Manager]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="286" y="5" width="100" height="17" forecolor="#3E515B" uuid="f79a361f-b046-49bd-94ee-1a65160da7c9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="386" y="5" width="100" height="17" forecolor="#3E515B" uuid="62b1d158-7d6a-48a4-a53b-0ab3a46a2821"/>
+				<textElement textAlignment="Left">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/mm/yyyy HH:mm">
+				<reportElement x="684" y="5" width="116" height="17" forecolor="#0D151A" uuid="822cb047-e423-4ccc-a7ec-f4221f2c2789">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Comfortaa" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(new SimpleDateFormat("dd/MM/yyyy HH:mm")).format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="209" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="44" width="802" height="85" uuid="df4f6ff1-484d-4fc5-bd3f-1c67e982a62f">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab_CH"/>
+					<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab_CG"/>
+					<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab_CT"/>
+					<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab_CD"/>
+				</reportElement>
+				<rowGroup name="operacao" width="55" totalPosition="End">
+					<bucket order="Descending" class="java.lang.String">
+						<bucketExpression><![CDATA[$F{operacao}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField>
+								<reportElement x="0" y="0" width="55" height="40" uuid="0e03ee6d-229f-4974-ac55-0bb636e00622"/>
+								<textElement>
+									<font fontName="Comfortaa" size="7" isBold="true" isUnderline="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{operacao}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CG">
+							<staticText>
+								<reportElement x="0" y="0" width="110" height="20" uuid="318239b9-1193-4db1-a9cd-a900b841f353"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Comfortaa" size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total Geral Mês]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<rowGroup name="observacao" width="55" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{observacao}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField>
+								<reportElement x="0" y="0" width="55" height="20" uuid="eb2fec1d-a7d4-4df4-b049-27e90af2b169"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Comfortaa" size="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{observacao}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="55" height="20" forecolor="#000000" backcolor="#FAFAF5" uuid="23a39002-9eb5-49c9-9d17-aef9d7b57df8"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Comfortaa" size="7" isItalic="true"/>
+								</textElement>
+								<text><![CDATA[Total ]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="data_contabil" height="20" totalPosition="End" mergeHeaderCells="true">
+					<bucket order="None" class="java.lang.Object">
+						<bucketExpression><![CDATA[(MONTH($F{data_contabil}) == 1 ? "Jan":
+	(MONTH($F{data_contabil}) == 2 ? "Fev":
+		(MONTH($F{data_contabil}) == 3 ? "Mar":
+			(MONTH($F{data_contabil}) == 4 ? "Abr":
+				(MONTH($F{data_contabil}) == 5 ? "Mai":
+					(MONTH($F{data_contabil}) == 6 ? "Jun":
+						(MONTH($F{data_contabil}) == 7 ? "Jul":
+							(MONTH($F{data_contabil}) == 8 ? "Ago":
+								(MONTH($F{data_contabil}) == 9 ? "Set":
+									(MONTH($F{data_contabil}) == 10 ? "Out":
+										(MONTH($F{data_contabil}) == 11 ? "Nov":"Dez")
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+ +"/"+YEAR($F{data_contabil})]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField>
+								<reportElement x="0" y="0" width="52" height="20" uuid="d7438f38-d9d9-44d1-a72c-41f5a1a6ce8f"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Comfortaa" size="7" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{data_contabil}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="20" forecolor="#000000" uuid="ceb178e3-7ba9-4e90-841b-0f03f3713ab1"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Comfortaa" size="7" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="valor_MEASURE" class="java.math.BigDecimal" calculation="Sum">
+					<measureExpression><![CDATA[$F{valor}]]></measureExpression>
+				</measure>
+				<crosstabCell width="52" height="20">
+					<cellContents mode="Opaque" style="Crosstab_CD">
+						<textField pattern="#,##0.00#">
+							<reportElement x="0" y="0" width="52" height="20" uuid="f790b9df-1d4c-44c3-8737-f67c2ae3ecd6"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Comfortaa" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="data_contabil">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0.00#">
+							<reportElement mode="Transparent" x="0" y="0" width="60" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="d327dc32-d32b-4296-8494-3fb41f5d0f2e"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Comfortaa" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="52" height="20" rowTotalGroup="observacao">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0.00#">
+							<reportElement mode="Opaque" x="0" y="0" width="52" height="20" forecolor="#000000" backcolor="#FAFAF5" uuid="85cced32-cba3-40f4-a707-5acc647ccd1d"/>
+							<box rightPadding="1"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Comfortaa" size="7" isItalic="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="observacao" columnTotalGroup="data_contabil">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0.00#">
+							<reportElement mode="Opaque" x="0" y="0" width="60" height="20" forecolor="#000000" backcolor="#FAFAF5" uuid="ae29a7f1-3240-4217-bf8e-2cc6c9d3740c"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Comfortaa" size="7" isItalic="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="52" height="20" rowTotalGroup="operacao">
+					<cellContents mode="Opaque" style="Crosstab_CG">
+						<textField pattern="#,##0.00#">
+							<reportElement x="0" y="0" width="52" height="20" forecolor="#000000" uuid="77bd04a5-ae3d-41ea-965f-9105d9421dd1"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Comfortaa" size="7" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="operacao" columnTotalGroup="data_contabil">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField pattern="#,##0.00#">
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#000000" uuid="e62aeb8c-52a7-419b-8fa9-c75732d56944"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Comfortaa" size="7" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<staticText>
+				<reportElement x="0" y="10" width="68" height="10" uuid="4f0a27ab-860d-4ff5-9bee-b941adb69174">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<text><![CDATA[Saldo Inicial da conta]]></text>
+			</staticText>
+			<textField pattern="#,##0.00#">
+				<reportElement x="64" y="22" width="101" height="10" uuid="7b5004a6-f23f-4f96-98ec-74ec0c40d742">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["R$ "+$F{saldo_inicial}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00#">
+				<reportElement x="69" y="10" width="168" height="10" uuid="4b4be4ba-2f54-49fb-b73b-94d4a7a0b4e7">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descricao_conta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="22" width="52" height="10" uuid="0a7fc2b9-7d47-4ac4-adf9-b4bec28ca782">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Comfortaa" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["em  01/"+$P{data_inicial}.substring( 5, 7 )+"/"+$P{data_inicial}.substring( 0, 4 ) + ":"]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

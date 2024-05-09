@@ -1,0 +1,30 @@
+{% block asdasd %} {{ dump(data) }} {% endblock %}
+
+{% extends "relatorios/contas_receber/base.html" %}
+
+       
+            {% block contasReceberTabela %}
+                {% for item in data.itens %}
+                    <tr>
+                        <td class="texto-tabela-esquerda">{{ item.id }}</td>        				
+                        <td class="texto-tabela-esquerda">{{ item.cliente_nome | default(' ') }}</td>
+                        <td class="texto-tabela-esquerda">{{ item.data_vencimento }}</td>        				
+                        <td class="texto-tabela-esquerda">{{ item.observacao| default(' ')  }}</td>        				
+                        <td class="texto-tabela-esquerda"> {{ item.metodo | default(' ') }}</td>
+                        <td class="texto-tabela-esquerda">{{ item.valor_original|number_format(2, ',', '.') }}</td>
+                        <td class="texto-tabela-esquerda">{{ item.valor_saldo_devedor|number_format(2, ',', '.') }}</td>
+                        <td class="texto-tabela-esquerda">{{ item.valor_conciliado|number_format(2, ',', '.') }}</td>
+                        <td class="texto-tabela-esquerda">{{ item.situacao | default(' ') }}</td>
+                    </tr>
+                    {% endfor %}
+                      
+            {% endblock %}
+
+            {% block totais %}
+
+            <div class="texto-tabela-esquerda-rodape"><b>Recebido: R$ {{ data.total_recebido | number_format(2, ',', '.') }}</b> </div>
+            <div class="texto-tabela-esquerda-rodape"><b>Recebido Não Conciliado: R$ {{ data.total_recebido_nao_conciliado | number_format(2, ',', '.')  }}</b> </div>
+            <div class="texto-tabela-esquerda-rodape"><b>A Receber: R$ {{ data.total_pendente | number_format(2, ',', '.')  }}</b> </div>
+            <div class="texto-tabela-esquerda-rodape"><b>Vencido: R$ {{ data.total_vencido | number_format(2, ',', '.')  }}</b> </div>
+
+            {% endblock %}

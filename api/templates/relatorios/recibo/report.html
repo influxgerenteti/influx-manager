@@ -1,0 +1,35 @@
+{% block asdasd %} {{ dump(recibos) }} {% endblock %}
+
+{% extends "relatorios/recibo/base.html" %}
+
+{% block nomeFranqueada %}{{ recibo.nomeEmpresa }}{% endblock %}
+{% block nomeFranqueadaData %}{{ recibo.nomeEmpresa }} em {{ recibo.dataContabil }}{% endblock %}
+            {% block reciboNumero %}{{ recibo.numeroRecibo }}{% endblock %}
+            {% block dataImpressao %}{{ recibo.dataImpressao }}{% endblock %}
+            {% block dataImpressaoCompleto %}{{ recibo.dataImpressaoCompleto }}{% endblock %}
+            {% block enderecoCompletoEmpresa %}{{ recibo.enderecoCompletoEmpresa }}{% endblock %}
+            {% block valorTotal %}{{ recibo.valorTotal|number_format(2, ',', '.') }}{% endblock %}
+            {% block valorExtenso %}{{ recibo.valorExtenso }}{% endblock %}
+            {% block reciboEmitente %}{{ recibo.recebimentoFormapagamentoEmitente }} em {{ recibo.dataContabil }}{% endblock %}
+            {% block reciboEmitenteNome %}{{ recibo.Emitente }}{% endblock %}
+            {% block referente %}{{ recibo.referente }}{% endblock %}
+            {% block reciboTabela %}
+                {% for item in recibo.itens %}
+                    <tr>
+                        <td class="texto-tabela-esquerda">{{ item.categoria }}</td>        				
+                        <td class="texto-tabela-esquerda">{{ item.vencimento }}</td>
+                        <td class="texto-tabela-esquerda">{{ item.recebimentoFormapagamentoEmitente }}</td>        				
+                        <td class="texto-tabela-esquerda">{{ item.desconto }}</td>
+                        <td class="texto-tabela-esquerda">{{ item.juros }}</td>
+                        <td class="texto-tabela-esquerda">{{ item.valorTitulo|number_format(2, ',', '.') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="texto-tabela-esquerda" style="vertical-align: top;"><b>Detalhamento Movimento:</b></td>
+                        <td class="texto-tabela-esquerda" style="vertical-align: top;" colspan="6">{{ item.detalhamentoMovimento }}</td>
+                    </tr>
+                    <tr>
+                        <td class="texto-tabela-esquerda" style="vertical-align: top;"><b>Detalhamento Titulo:</b></td>
+                        <td class="texto-tabela-esquerda" style="vertical-align: top;" colspan="6">{{ item.detalhamentoTitulo }}</td>
+                    </tr> 
+                {% endfor %}
+            {% endblock %}

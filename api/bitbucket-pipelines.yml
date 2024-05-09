@@ -1,0 +1,63 @@
+image: senyahnoj/pipelines-php-mysql
+pipelines:
+    default:
+        - step:
+            caches:
+                - composer
+            script:
+                - php ./env-variables-ci.php
+                - service mysql start
+                - composer install
+                - composer sniff
+                - ./bin/console doctrine:database:create --connection base_principal
+                - ./bin/console doctrine:database:create --connection base_log
+                - ./bin/console doctrine:migrations:diff --em=base_principal
+                - ./bin/console doctrine:migrations:migrate --em=base_principal
+                - ./bin/console doctrine:migrations:diff --em=base_log
+                - ./bin/console doctrine:migrations:migrate --em=base_log
+                - ./bin/console doctrine:fixtures:load --no-interaction --em=base_principal
+                - APP_ENV=test composer test
+
+        - step:
+            image: node:8
+            caches:
+                - node
+            script:
+                - yarn
+                - yarn run test
+
+        - step:
+            name: Deploy to Test
+            image: node:8
+            deployment: test
+            trigger: manual
+            caches:
+                - node
+            script:
+                - yarn
+                - yarn run build
+                - ./deploy/deploy.sh
+    custom:
+        deploy_gatilabs:
+            - step:
+                name: Deploy to GATI labs. Homolog (influx-manager.gatilabs.com.br)
+                image: node:8
+                deployment: production
+                caches:
+                    - node
+                script:
+                    - yarn
+                    - yarn run build
+                    - ./deploy/deploy.sh gati-homolog
+
+        deploy_influx:
+            - step:
+                name: Deploy to inFlux Homolog (crm.dev.influx.com.br)
+                image: node:8
+                deployment: production
+                caches:
+                    - node
+                script:
+                    - yarn
+                    - yarn run build
+                    - ./deploy/deploy.sh influx-homolog
